@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Irina (Irko) Kekman | Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <header id="home">
-        <h1>Hi, I’m Irko</h1>
-        <p>Game producer & level designer with love for systems, community, and cats.</p>
-        <a href="#game-projects" class="cta-button">Explore my work</a>
-    </header>
-
-    <nav class="scroll-nav">
-        <a href="#about">About</a>
-        <a href="#game-projects">Games</a>
-        <a href="#community">FGJ</a>
-        <a href="#side-projects">VJ</a>
-        <a href="#background">Extra</a>
-        <a href="#contact">Contact</a>
-    </nav>
-
-    <main>
-        <section id="about">
+<main>
+    <div class="grid-container">
+        <section id="about" class="grid-item">
             <h2>About Me</h2>
             <p>Aspiring indie producer & level designer with roots in business consulting and community-building</p>
             <p>Looking for production, or design roles in your game studio.</p>
         </section>
+        <div class="grid-item">
+            <img src="images/about-example.jpg" alt="About Me example image" />
+        </div>
 
-        <section id="game-projects">
+        <section id="game-projects" class="grid-item">
             <h2>Game Projects</h2>
             <div class="project">
                 <h3>
-                    🕹️ <a href="https://store.steampowered.com/app/2377090/Willow_Guard/" target="_blank" rel="noopener noreferrer">
-                        Willow Guard (Released on Steam)
+                    🕹️ <a href="https://www.willowguard.games" target="_blank" rel="noopener noreferrer">
+                        Willow Guard
                     </a>
                 </h3>
                 <p><strong>Role:</strong> Level Designer & Producer</p>
@@ -58,116 +38,93 @@
                     <li>Conducted A/B testing on randomized vs static layouts to measure impact on player immersion and perception</li>
                 </ul>
             </div>
-            <section id="cat-rpg">
-                <h3>🐈‍⬛ Solo Project: Untitled Cat RPG (In Development)</h3>
-                <p><strong>Role:</strong> Solo Developer</p>
-                <p><strong>Genre:</strong> Exploration Adventure RPG</p>
-                <p><strong>Platform:</strong> PC (potential for mobile)</p>
+        </section>
+        <div class="grid-item">
+            <img src="images/willowguard-screenshot.jpg" alt="Willow Guard gameplay screenshot" />
+        </div>
 
-                <h4>Current Focus</h4>
-                <ul>
-                    <li>Building unconventional 2.5D movement system (8-directional top-down movement + jumping and elevation interaction)</li>
-                    <li>Developing procedural content generation systems to replace minigame-based stat upgrades</li>
-                    <li>Designing world exploration that emphasizes curiosity and flow over linear challenge</li>
-                </ul>
+        <section id="community" class="grid-item">
+            <h2>🎉 Community Work</h2>
+            <h3>Finnish Game Jam – 2023–present</h3>
+            <p><strong>Role:</strong> Board Member, PR</p>
+            <ul>
+                <li>Live stream host at various jams</li>
+                <li>Social media management: content planning, content creation (art, photo, video)</li>
+                <li>
+                    Pride Game Jam – Main Organiser:
+                    <ul>
+                        <li>Secured industry speakers and improved participant engagement</li>
+                        <li>Increased attendance each year through active outreach and community building</li>
+                        <li>Volunteers art team lead</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <div class="grid-item">
+            <img src="images/community-event.jpg" alt="Finnish Game Jam event photo" />
+        </div>
 
-                <h4>Tech</h4>
-                <ul>
-                    <li>Unity (C# scripting with assistance from tools/documentation)</li>
-                    <li>Prototyping solo with placeholder art and system architecture</li>
-                </ul>
-            </section>
+        <section id="side-projects" class="grid-item">
+            <h2>🎨 Side Projects & Generative Art</h2>
+            <h3>✨ VJ & Generative Art (TouchDesigner)</h3>
+            <p><strong>Role:</strong> Artist & Visuals Designer</p>
+            <p><strong>Format:</strong> Live visuals for shows, small paid gigs</p>
 
-            <!--<section id="school-project">
-                <h3>🎓 School Project (Narrative Puzzle Game)</h3>
-                <p><strong>Role:</strong> Writer, Designer, Developer</p>
-                <p><strong>Engine:</strong> Unity (originally built with visual scripting)</p>
+            <h4>Activities</h4>
+            <ul>
+                <li>Built real-time visuals with procedural systems in TouchDesigner</li>
+                <li>Designed audio-reactive and system-driven effects for VJ sets</li>
+                <li>Worked on a yet-unreleased project with a celebrity client</li>
+                <li>Potential installation work for August 2025</li>
+                <li>Posted select early works on Instagram (not yet fully documented)</li>
+            </ul>
 
-                <h4>Key Features</h4>
-                <ul>
-                    <li>Narrative told in reverse order; full meaning emerges as player connects timeline pieces</li>
-                    <li>Written story + achievements designed for emotional and quirky impact</li>
-                    <li>Initially implemented with visual scripting; currently rewriting with custom code</li>
-                    <li>Strong candidate for expansion and polish into a portfolio-ready title</li>
-                </ul>
-            </section>-->
+            <h4>Skills</h4>
+            <ul>
+                <li>Real-time audiovisual logic</li>
+                <li>Motion design thinking</li>
+                <li>Procedural systems aesthetics</li>
+            </ul>
+        </section>
+        <div class="grid-item">
+            <img src="images/vj-setup.jpg" alt="Generative art and VJ setup" />
+        </div>
 
-            <section id="community-work">
-                <h2>🎉 Community Work</h2>
-                <h3>Finnish Game Jam – 2023–present</h3>
-                <p><strong>Role:</strong> Board Member, PR</p>
+        <section id="background" class="grid-item">
+            <h2>🧠 Professional Background (Pre-Gamedev)</h2>
+            <h3>💼 Business Administration & Consulting (Finland-based clients)</h3>
+            <p><strong>Role:</strong> Business Consultant / Interim Manager</p>
+            <p><strong>Clients:</strong> Relocating entrepreneurs and business owners</p>
 
-                <ul>
-                    <li>Live stream host at various jams</li>
-                    <li>Social media management: content planning, content creation (art, photo, video)</li>
-                    <li>
-                        <strong>Pride Game Jam – Main Organiser:</strong>
-                        <ul>
-                            <li>Secured industry speakers and improved participant engagement</li>
-                            <li>Increased attendance each year through active outreach and community building</li>
-                            <li>Volunteers art team lead</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
+            <h4>Key Tasks</h4>
+            <ul>
+                <li>Advised clients on legal setup of Finnish businesses</li>
+                <li>Created and customized business plans for immigration and startup success</li>
+                <li>Accompanied clients to immigration/tax offices for real-time translation and consultation</li>
+                <li>Managed rental properties, including contracts, databases, and tax paperwork</li>
+                <li>Operated as interim executive in small businesses during client’s relocation process</li>
+            </ul>
 
-            <section id="generative-art">
-                <h2>🎨 Side Projects & Generative Art</h2>
-                <h3>✨ VJ & Generative Art (TouchDesigner)</h3>
-                <p><strong>Role:</strong> Artist & Visuals Designer</p>
-                <p><strong>Format:</strong> Live visuals for shows, small paid gigs</p>
+            <h4>Transferable Skills</h4>
+            <ul>
+                <li>Strategic planning</li>
+                <li>Operational problem-solving</li>
+                <li>Stakeholder communication</li>
+                <li>Documentation and bureaucracy navigation</li>
+            </ul>
+        </section>
+        <div class="grid-item">
+            <img src="images/business-consulting.jpg" alt="Business consulting photo" />
+        </div>
 
-                <h4>Activities</h4>
-                <ul>
-                    <li>Built real-time visuals with procedural systems in TouchDesigner</li>
-                    <li>Designed audio-reactive and system-driven effects for VJ sets</li>
-                    <li>Worked on a yet-unreleased project with a celebrity client</li>
-                    <li>Potential installation work for August 2025</li>
-                    <li>Posted select early works on Instagram (not yet fully documented)</li>
-                </ul>
-
-                <h4>Skills</h4>
-                <ul>
-                    <li>Real-time audiovisual logic</li>
-                    <li>Motion design thinking</li>
-                    <li>Procedural systems aesthetics</li>
-                </ul>
-            </section>
-
-            <section id="professional-background">
-                <h2>🧠 Professional Background (Pre-Gamedev)</h2>
-                <h3>💼 Business Admin & Consulting (Finland-based clients)</h3>
-                <p><strong>Role:</strong> Business Consultant / Interim Manager</p>
-                <p><strong>Clients:</strong> Relocating entrepreneurs and business owners</p>
-
-                <h4>Key Tasks</h4>
-                <ul>
-                    <li>Advised clients on legal setup of Finnish businesses</li>
-                    <li>Created and customized business plans for immigration and startup success</li>
-                    <li>Accompanied clients to immigration/tax offices for real-time translation and consultation</li>
-                    <li>Managed rental properties, including contracts, databases, and tax paperwork</li>
-                    <li>Operated as interim executive in small businesses during client’s relocation process</li>
-                </ul>
-
-                <h4>Transferable Skills</h4>
-                <ul>
-                    <li>Strategic planning</li>
-                    <li>Operational problem-solving</li>
-                    <li>Stakeholder communication</li>
-                    <li>Documentation and bureaucracy navigation</li>
-                </ul>
-            </section>
-
-            <section id="contact">
-                <h2>📬 Contact</h2>
-                <p>Let’s build something awesome together!</p>
-                <p><a href="mailto:your.email@example.com">irina.kekman@gmail.com</a></p>
-                <p><a href="assets/your-cv.pdf" download>Download CV (PDF)</a></p>
-            </section>
+        <section id="contact" class="grid-item">
+            <h2>📬 Contact</h2>
+            <p>Let’s build something awesome together!</p>
+            <p><a href="mailto:your.email@example.com">irina.kekman@gmail.com</a></p>
+            <p><a href="assets/your-cv.pdf" download>Download CV (PDF)</a></p>
+        </section>
+        <div class="grid-item">
+            <img src="images/contact-icon.png" alt="Contact icon" />
+        </div>
+    </div>
 </main>
-
-    <footer>
-        <p>© Irina (Irko) Kekman 2025</p>
-    </footer>
-</body>
-</html>
