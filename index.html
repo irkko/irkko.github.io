@@ -1,28 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Name</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    h1 { color: #333; }
-    a { color: #007acc; text-decoration: none; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name | Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Hello, I'm Your Name 👋</h1>
-  <p>Welcome to my portfolio. I'm a game designer / VJ / creative technologist.</p>
-  <p>Check out:</p>
-  <ul>
-    <li><a href="https://youritchio.itch.io">My games</a></li>
-    <li><a href="mailto:you@email.com">Email me</a></li>
-    <li><a href="https://www.linkedin.com/in/yourprofile">LinkedIn</a></li>
-  </ul>
+    <header id="home">
+        <h1>Hi, I’m [Your Name]</h1>
+        <p>Aspiring indie producer & level designer with a love for systems, community, and weird cats.</p>
+        <a href="#game-projects" class="cta-button">Explore my work</a>
+    </header>
+
+    <nav class="scroll-nav">
+        <a href="#about">About</a>
+        <a href="#game-projects">Games</a>
+        <a href="#community">Community</a>
+        <a href="#side-projects">Art</a>
+        <a href="#background">Professional</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Multidisciplinary creative: games, procedural art, events, and communication.</p>
+            <p>Looking for QA, support, production, or design roles in indie studios.</p>
+        </section>
+
+        <section id="game-projects">
+            <h2>Game Projects</h2>
+            <div class="project">
+                <h3>🕹️ Willow Guard (Released on Steam)</h3>
+                <p><strong>Role:</strong> Level Designer & Producer</p>
+                <ul>
+                    <li>Led team meetings, sprint planning (Jira), GDD upkeep, and dev summaries</li>
+                    <li>Designed modular dungeon rooms, interactables, and a layout randomizer</li>
+                    <li>Ran A/B testing on procedural vs static design impact</li>
+                </ul>
+            </div>
+            <div class="project">
+                <h3>🐈‍⬛ Untitled Cat RPG (In Development)</h3>
+                <p><strong>Role:</strong> Solo Dev</p>
+                <ul>
+                    <li>Top-down 2.5D movement with jumping + elevation</li>
+                    <li>Procedural stat upgrades and exploration-driven design</li>
+                    <li>Unity + C#, solo prototyping</li>
+                </ul>
+            </div>
+            <div class="project">
+                <h3>🎓 Narrative Puzzle (School Project)</h3>
+                <ul>
+                    <li>Story told backwards; emotional beats + quirky logic</li>
+                    <li>Visual scripting → transitioning to custom code</li>
+                    <li>Candidate for portfolio polish</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="community">
+            <h2>Game Jam & Community Work</h2>
+            <p><strong>Pride Jam (Finnish Game Jam) – 2023–2025</strong></p>
+            <ul>
+                <li>Lead organizer + FGJ board member</li>
+                <li>Grew attendance and secured speakers yearly</li>
+                <li>Spoke at industry meetup (Feb 2024)</li>
+            </ul>
+        </section>
+
+        <section id="side-projects">
+            <h2>Side Projects & Generative Art</h2>
+            <ul>
+                <li>TouchDesigner visuals for VJ gigs</li>
+                <li>Audio-reactive & procedural designs</li>
+                <li>Possible 2025 installation; collab with celebrity (unreleased)</li>
+            </ul>
+        </section>
+
+        <section id="background">
+            <h2>Professional Background</h2>
+            <p><strong>Business Admin & Consulting (Finland)</strong></p>
+            <ul>
+                <li>Helped expats start companies, managed rentals</li>
+                <li>Translated, handled bureaucracy, wrote business plans</li>
+                <li>Transferable skills: planning, problem-solving, documentation</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Let’s build something together.</h2>
+            <p><a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            <p><a href="assets/your-cv.pdf" download>Download CV (PDF)</a></p>
+            <p>
+                <a href="https://linkedin.com/in/yourprofile">LinkedIn</a> |
+                <a href="https://youritch.io">Itch.io</a> |
+                <a href="https://instagram.com/yourartpage">Instagram</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© [Your Name] 2025</p>
+    </footer>
 </body>
 </html>

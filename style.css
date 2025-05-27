@@ -1,0 +1,64 @@
+body {
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background: #fdfdfd;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.cta-button {
+    background: #ff5c5c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.scroll-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    background: #eee;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+}
+
+    .scroll-nav a {
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+section {
+    margin-bottom: 4rem;
+}
+
+.project {
+    margin-bottom: 2rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    background: #f4f4f4;
+}
