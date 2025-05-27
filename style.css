@@ -1,200 +1,141 @@
-/* Base styles */
+/* Base Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
-    background: #fafafa;
-    color: #2c2c2c;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background: #fdfdfd;
+    color: #222;
 }
 
 header {
-    background: #1a1a1a;
-    color: #fff;
-    padding: 5rem 2rem 3rem;
+    background: #111;
+    color: white;
+    padding: 4rem 2rem;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
-    header h1 {
-        font-size: 3rem;
-        margin-bottom: 0.25rem;
-        letter-spacing: 0.05em;
-    }
-
-    header p {
-        font-size: 1.25rem;
-        opacity: 0.8;
-        margin-bottom: 1.5rem;
-    }
-
 .cta-button {
-    background: #ff4a4a;
+    background: #ff5c5c;
     color: white;
-    padding: 0.85rem 2rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 700;
     display: inline-block;
+    margin-top: 1rem;
     transition: background-color 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 74, 74, 0.4);
 }
 
     .cta-button:hover {
-        background: #e04343;
-        box-shadow: 0 6px 20px rgba(224, 67, 67, 0.6);
+        background-color: #e04e4e;
+        cursor: pointer;
     }
 
+/* Navigation */
 .scroll-nav {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    background: #f5f5f5;
-    padding: 1.2rem 0;
+    gap: 1.8rem;
+    background: #eee;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
-    border-bottom: 1px solid #ddd;
     z-index: 100;
-    font-weight: 600;
-    font-size: 1rem;
+    border-bottom: 1px solid #ccc;
 }
 
     .scroll-nav a {
-        color: #444;
+        color: #333;
         text-decoration: none;
+        font-weight: 600;
         padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: 5px;
+        transition: background-color 0.25s ease;
     }
 
         .scroll-nav a:hover,
         .scroll-nav a:focus {
             background-color: #ff5c5c;
             color: white;
-            outline: none;
         }
 
+/* Main content & grid container */
 main {
-    max-width: 1200px; /* wider for grid */
-    margin: 3rem auto;
-    padding: 0 2rem;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
-/* Grid container for sections */
+/* Grid layout for sections and images */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 3rem 4rem;
     align-items: start;
+    margin-bottom: 4rem;
 }
 
-/* Each grid cell */
 .grid-item {
-    /* padding can be added if needed */
+    /* For text or images */
 }
 
-/* Section styles */
-section {
-    background: white;
-    padding: 2rem 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-    transition: box-shadow 0.3s ease;
-}
-
-    section:hover {
-        box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    .grid-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
     }
 
-h2 {
-    font-size: 2.25rem;
-    margin-bottom: 1rem;
-    border-bottom: 3px solid #ff5c5c;
-    padding-bottom: 0.3rem;
-    letter-spacing: 0.03em;
-    font-weight: 700;
-}
+        .grid-item img:hover {
+            transform: scale(1.05);
+        }
 
-h3 {
-    font-size: 1.4rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: #333;
-    font-weight: 600;
-}
-
-h4 {
-    margin-top: 1rem;
-    font-weight: 600;
-    color: #666;
-}
-
-ul {
-    margin-top: 0.5rem;
-    padding-left: 1.25rem;
-    color: #444;
-    list-style: disc;
-}
-
-p {
-    margin: 0.5rem 0 1rem;
-    color: #555;
-    font-size: 1rem;
-}
-
-/* Images in grid items */
-.grid-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-    .grid-item img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    }
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .grid-container {
-        gap: 2.5rem 3rem;
-    }
-}
-
-@media (max-width: 768px) {
-    main {
-        padding: 0 1rem;
-    }
-
+/* Responsive: stack columns on smaller screens */
+@media (max-width: 720px) {
     .grid-container {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    section {
-        padding: 1.5rem 1.8rem;
-    }
-
-    h2 {
-        font-size: 1.8rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
+        gap: 2rem 0;
     }
 }
 
+/* Section headings */
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #111;
+    border-bottom: 2px solid #ff5c5c;
+    padding-bottom: 0.3rem;
+}
+
+section h3 {
+    margin-top: 1.5rem;
+    font-size: 1.4rem;
+    color: #444;
+}
+
+/* Lists */
+ul {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+    ul li {
+        margin-bottom: 0.4rem;
+    }
+
+/* Footer */
 footer {
     text-align: center;
-    padding: 2.5rem 1rem;
+    padding: 2rem;
     font-size: 0.9rem;
-    background: #fafafa;
+    background: #f4f4f4;
     color: #666;
-    border-top: 1px solid #ddd;
-    font-weight: 500;
+}
+
+/* Additional polish */
+p {
+    margin-bottom: 1rem;
 }
