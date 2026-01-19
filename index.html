@@ -1,141 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Irina (Irko) Kekman | Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME</title>
     <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Mona+Sans:wght@400;600&display=swap" rel="stylesheet" />
     <style>
-        body {
-            font-family: 'Mona Sans', system-ui, sans-serif;
-            background: #121212; /* Very dark grey background */
-            color: #ddd; /* Very light grey text */
-            margin: 0;
-            padding: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
+        * {
+            box-sizing: border-box;
         }
 
-        header {
+        body {
+            margin: 0;
+            background: hsl(213, 100%, 12.5%); /* dark blue */
+            color: white;
+            font-family: 'Major Mono Display', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            gap: 2rem;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-family: 'Major Mono Display', monospace;
+            margin: 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.2s forwards;
+        }
+
+        nav {
+            display: flex;
+            gap: clamp(1rem, 4vw, 2rem);
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-link {
+            position: relative;
+            color: white;
+            font-size: clamp(2rem, 6vw, 4rem);
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+            .nav-link:nth-child(1) {
+                animation-delay: 0.6s;
+            }
+
+            .nav-link:nth-child(2) {
+                animation-delay: 0.7s;
+            }
+
+            .nav-link:nth-child(3) {
+                animation-delay: 0.8s;
+            }
+
+            .nav-link:nth-child(4) {
+                animation-delay: 0.9s;
+            }
+
+            .nav-link:nth-child(5) {
+                animation-delay: 1.0s;
+            }
+
+            .nav-link:nth-child(6) {
+                animation-delay: 1.1s;
+            }
+
+            .nav-link:hover {
+                font-weight: bold;
+            }
+
+        #shader-tooltip {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            background: #ddd;
-            padding: 2rem 0;
-            box-sizing: border-box;
-            z-index: 1000;
+            pointer-events: none;
+            z-index: 10;
         }
 
-            header > div {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 0 1rem; /* horizontal padding inside */
-                text-align: center;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
 
-            header h1 {
-                font-family: 'Major Mono Display', monospace;
-                font-size: 2.5rem;
-                margin-bottom: 0.5rem;
-                color: #6a0dad; /* Purple header text */
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                gap: 1.5rem;
+                padding: 1rem;
             }
 
-            header p {
-                font-size: 1.1rem;
-                color: #6a0dad; /* Purple as well for the subtitle */
+            nav {
+                gap: 1rem;
             }
-
-        h2 {
-            margin-top: 2rem;
-            font-size: 1.2rem;
-            border-bottom: 2px solid #444;
-            padding-bottom: 0.25rem;
-            color: #ddd;
         }
-        h3 {
-            margin-top: 2rem;
-            font-size: 1.4rem;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 0.25rem;
-        }
-
-        ul {
-            padding-left: 1.5rem;
-            color: #ddd;
-        }
-
-        img {
-            max-width: 100%;
-            margin-top: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-        }
-
-        main {
-            padding-top: 180px; /* Increase this so content won't hide behind header */
-            max-width: 600px;
-            margin: 0 auto;
-            color: #ccc;
-            font-family: 'Mona Sans', sans-serif;
-            font-size: 1.2rem;
-            line-height: 1.5;
-            margin-top/*: calc(2rem * 2 + 2.5rem * 2);*/ /* roughly padding + two lines of text height */
-        }
-
     </style>
 </head>
+
 <body>
-    <header>
-        <div>
-            <h1>Irina (IRKO) Kekman</h1>
-            <p>Game producer & Level Designer with roots in business consulting and community-building</p>
-        </div>
-    </header>
+    <canvas id="shader-tooltip"></canvas>
+    <h1>WELCOME</h1>
+    <nav>
+        <a href="about/" class="nav-link" data-title="About me">&gt;</a>
+        <a href="games/" class="nav-link" data-title="Games">&gt;</a>
+        <a href="project-management/" class="nav-link" data-title="Project Management">&gt;</a>
+        <a href="media-production/" class="nav-link" data-title="Media Production">&gt;</a>
+        <a href="extra/" class="nav-link" data-title="Extra">&gt;</a>
+        <a href="contact/" class="nav-link" data-title="Contact">&gt;</a>
+    </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <script>
+        class WelcomePageShaders {
+            constructor() {
+                this.canvas = document.getElementById('shader-tooltip');
+                this.renderer = null;
+                this.scene = null;
+                this.camera = null;
+                this.mesh = null;
+                this.textTexture = null;
+                this.textCanvas = null;
+                this.ctx = null;
+                this.clock = null;
+                this.hideTimeout = null;
+                this.glitchIntensity = 0;
+                this.glitchTarget = 0;
+                this.animationId = null;
 
-    <main>
-        <h3>
-            <a href="https://www.willowguard.games" target="_blank" rel="noopener noreferrer">
-                Willow Guard
-            </a>
-        </h3>
-        <p><strong>Role:</strong> Level Designer & Producer</p>
-        <p><strong>Platform:</strong> PC (Steam)</p>
-        <p><strong>Genre:</strong> Narrative-driven Action RPG + Deckbuilder</p>
-        <p><strong>Studio:</strong> MiTale (Commercial title)</p>
+                this.init();
+            }
 
-        <h2>Production Work</h2>
-        <ul>
-            <li>Led and conducted weekly team meetings</li>
-            <li>Managed task planning using Jira: created sprints, tracked issues, managed priorities</li>
-            <li>Maintained and updated the Game Design Document (GDD)</li>
-            <li>Wrote concise meeting memos and dev summaries</li>
-        </ul>
+            init() {
+                if (!window.THREE) {
+                    console.warn('Three.js not loaded');
+                    return;
+                }
 
-        <h2>Level Design Contributions</h2>
-        <ul>
-            <li>Designed modular dungeon room prefabs</li>
-            <li>Created and implemented interactable object prefabs</li>
-            <li>Designed and integrated a randomization algorithm for level layouts</li>
-            <li>Conducted A/B testing on randomized vs static layouts to measure impact on player immersion and perception</li>
-        </ul>
+                this.setupRenderer();
+                this.setupScene();
+                this.setupTextCanvas();
+                this.setupMaterial();
+                this.setupEventListeners();
+                this.animate();
+            }
 
-        <img src="images/WG1.png" alt="Willow Guard dungeon room">
-        <img src="images/WG2.png" alt="Willow Guard dungeon room">
-        <img src="images/WG3.png" alt="Willow Guard dungeon room">
-        <img src="images/WG4.png" alt="Willow Guard dungeon room">
-        <img src="images/WG5.png" alt="Willow Guard dungeon room">
-        <img src="images/WG6.png" alt="Willow Guard dungeon room">
-        <img src="images/WG7.png" alt="Willow Guard dungeon room">
-        <img src="images/WG8.png" alt="Willow Guard dungeon room">
-        <img src="images/WG9.png" alt="Willow Guard dungeon room">
-        <img src="images/WG10.png" alt="Willow Guard dungeon room">
-        <img src="images/WG11.png" alt="Willow Guard dungeon room">
-        <img src="images/WG12.png" alt="Willow Guard dungeon room">
-    </main>
+            setupRenderer() {
+                this.renderer = new THREE.WebGLRenderer({
+                    canvas: this.canvas,
+                    alpha: true,
+                    antialias: true
+                });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setClearColor(0x000000, 0);
+            }
+
+            setupScene() {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.OrthographicCamera(
+                    0, window.innerWidth,
+                    window.innerHeight, 0,
+                    1, 10
+                );
+                this.camera.position.z = 5;
+                this.clock = new THREE.Clock();
+            }
+
+            setupTextCanvas() {
+                this.textCanvas = document.createElement('canvas');
+                this.ctx = this.textCanvas.getContext('2d');
+                this.textCanvas.width = 1920;
+                this.textCanvas.height = 128;
+
+                this.textTexture = new THREE.CanvasTexture(this.textCanvas);
+                this.textTexture.minFilter = THREE.LinearFilter;
+                this.textTexture.magFilter = THREE.LinearFilter;
+            }
+
+            setupMaterial() {
+                const geometry = new THREE.PlaneGeometry(200, 50);
+
+                const material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        uTexture: { value: this.textTexture },
+                        uTime: { value: 0 },
+                        uGlitchIntensity: { value: 0 }
+                    },
+                    vertexShader: `
+                            varying vec2 vUv;
+                            void main() {
+                                vUv = uv;
+                                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                            }
+                        `,
+                    fragmentShader: `
+                            uniform sampler2D uTexture;
+                            uniform float uTime;
+                            uniform float uGlitchIntensity;
+                            varying vec2 vUv;
+
+                            float rand(vec2 co) {
+                                return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+                            }
+
+                            void main() {
+                                vec2 uv = vUv;
+
+                                // Create blocky glitch effect
+                                if (uGlitchIntensity > 0.0) {
+                                    // Create block grid (10% of texture width max)
+                                    float blockSize = 0.05;
+                                    vec2 blockUV = floor(uv / blockSize) * blockSize;
+
+                                    // Random displacement for each block (3-8% displacement)
+                                    float offsetX = (rand(blockUV + uTime * 0.5) - 0.5) * 0.08 * uGlitchIntensity;
+                                    float offsetY = (rand(blockUV + uTime * 0.7 + 100.0) - 0.5) * 0.05 * uGlitchIntensity;
+
+                                    // Apply displacement only to some blocks
+                                    float blockChance = rand(blockUV + floor(uTime * 3.0));
+                                    if (blockChance < 0.1 * uGlitchIntensity) {
+                                        uv.x += offsetX;
+                                        uv.y += offsetY;
+                                    }
+                                }
+
+                                // Sample texture with clamping to avoid wrapping
+                                vec4 color = texture2D(uTexture, clamp(uv, 0.0, 1.0));
+
+                                gl_FragColor = color;
+                            }
+                        `,
+                    transparent: true
+                });
+
+                this.mesh = new THREE.Mesh(geometry, material);
+                this.scene.add(this.mesh);
+                this.mesh.visible = false;
+            }
+
+            drawText(text, width = 1920, height = 128) {
+                this.textCanvas.width = width;
+                this.textCanvas.height = height;
+
+                this.ctx.font = '48px Major Mono Display';
+                this.ctx.fillStyle = 'white';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.textAlign = 'center';
+
+                this.ctx.fillText(text, width / 2, height / 2);
+                this.textTexture.needsUpdate = true;
+
+                // Update mesh geometry
+                this.mesh.geometry.dispose();
+                this.mesh.geometry = new THREE.PlaneGeometry(width, height);
+            }
+
+            updateMeshPosition(rect) {
+                this.mesh.position.x = rect.left + rect.width / 2;
+                this.mesh.position.y = window.innerHeight - rect.bottom - 30;
+
+                // Store original position for jitter effect
+                this.mesh.originalX = this.mesh.position.x;
+                this.mesh.originalY = this.mesh.position.y;
+            }
+
+            showTooltip(element) {
+                if (this.hideTimeout) {
+                    clearTimeout(this.hideTimeout);
+                    this.hideTimeout = null;
+                }
+
+                const title = element.getAttribute('data-title');
+                if (!title) return;
+
+                const rect = element.getBoundingClientRect();
+
+                this.drawText(title);
+                this.updateMeshPosition(rect);
+                this.mesh.visible = true;
+                this.glitchTarget = 1; // Start glitch effect
+            }
+
+            hideTooltip() {
+                this.hideTimeout = setTimeout(() => {
+                    this.mesh.visible = false;
+                    this.glitchTarget = 0; // Stop glitch effect
+                    this.hideTimeout = null;
+                }, 300);
+            }
+
+            animate() {
+                this.animationId = requestAnimationFrame(() => this.animate());
+
+                // Smooth glitch intensity interpolation
+                this.glitchIntensity += (this.glitchTarget - this.glitchIntensity) * 0.1;
+
+                // Add subtle jitter to the tooltip position when glitching
+                if (this.glitchIntensity > 0.0 && this.mesh.visible) {
+                    const time = this.clock.getElapsedTime();
+                    const jitterX = (Math.random() - 0.5) * 2 * this.glitchIntensity;
+                    const jitterY = (Math.random() - 0.5) * 2 * this.glitchIntensity;
+
+                    // Store original position if not already stored
+                    if (!this.mesh.originalX) {
+                        this.mesh.originalX = this.mesh.position.x;
+                        this.mesh.originalY = this.mesh.position.y;
+                    }
+
+                    this.mesh.position.x = this.mesh.originalX + jitterX;
+                    this.mesh.position.y = this.mesh.originalY + jitterY;
+                } else if (this.mesh.originalX) {
+                    // Reset to original position when not glitching
+                    this.mesh.position.x = this.mesh.originalX;
+                    this.mesh.position.y = this.mesh.originalY;
+                }
+
+                // Update shader uniforms
+                this.mesh.material.uniforms.uGlitchIntensity.value = this.glitchIntensity;
+                this.mesh.material.uniforms.uTime.value = this.clock.getElapsedTime();
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            handleResize() {
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.camera.right = window.innerWidth;
+                this.camera.top = window.innerHeight;
+                this.camera.updateProjectionMatrix();
+            }
+
+            setupEventListeners() {
+                const links = document.querySelectorAll('.nav-link');
+
+                links.forEach(link => {
+                    link.addEventListener('mouseenter', () => this.showTooltip(link));
+                    link.addEventListener('mouseleave', () => this.hideTooltip());
+                });
+
+                window.addEventListener('resize', () => this.handleResize());
+            }
+
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+
+                if (this.hideTimeout) {
+                    clearTimeout(this.hideTimeout);
+                }
+
+                if (this.mesh) {
+                    this.mesh.geometry?.dispose();
+                    this.mesh.material?.dispose();
+                }
+
+                if (this.textTexture) {
+                    this.textTexture.dispose();
+                }
+
+                if (this.renderer) {
+                    this.renderer.dispose();
+                }
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            new WelcomePageShaders();
+        });
+    </script>
 </body>
 </html>
