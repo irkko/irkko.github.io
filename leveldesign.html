@@ -503,8 +503,6 @@
         // const SIDE_ROW_RATIO = 0.15;   // 15% top + 15% bottom
         const CENTER_SAFE_RATIO = 0.85; // 85% text-safe width
 
-        const TOP_ZONE_RATIO = 0.18; // ~18% of screen height (tweak later)
-
         const TOP_BG_RATIO = 0.05;     // 5% allowed background in top rows
         const SIDE_FILL_RATIO = 0.10; // 10% allowed filled in side columns
         const SIDE_ROW_RATIO = 0.1;   // 10% side height
@@ -763,7 +761,7 @@
 
         function isInActiveZone(row, col) {
             // --- HEADER (top 8 rows) ---
-            if (row < topZoneRowCount) return true;
+            if (row < 8) return true;
 
             // --- SIDE COLUMNS (full height, text-safe center excluded) ---
             const inSideCols =
@@ -816,11 +814,6 @@
             gridCols = Math.ceil(canvas.width / cellSize);
             gridRows = Math.ceil(canvas.height / cellSize);
 
-            let topZoneRowCount = Math.max(
-                1,
-                Math.floor(gridRows * TOP_ZONE_RATIO)
-            );
-
             // vertical limits
             // sideRowCount = Math.floor(gridRows * SIDE_ROW_RATIO);
 
@@ -837,7 +830,7 @@
                 for (let col = 0; col < gridCols; col++) {
                     const cell = new CellState(row, col);
 
-                    if (row < topZoneRowCount) {
+                    if (row < 8) {
                         cell.alpha = 1;
                         cell.targetAlpha = 1;
                     }
@@ -924,7 +917,7 @@
                 !c.isActive &&
                 !c.isPartOfLargeSquare &&
                 (
-                    c.row >= topZoneRowCount ||           // sides + lower grid
+                    c.row >= 8 ||           // sides + lower grid
                     c._needsTopBias === true
                 )
             );
@@ -938,7 +931,7 @@
         }
 
         function enforceTopRowRatio() {
-            const topCells = allCells.filter(c => topZoneRowCount);
+            const topCells = allCells.filter(c => c.row < 8);
             const total = topCells.length;
 
             const bgCells = topCells.filter(c =>
