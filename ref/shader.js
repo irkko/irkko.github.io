@@ -7,11 +7,9 @@ const ctx = canvas.getContext('2d');
 
 // let cellSize = 24;
 
-let cellSize = getCellSize();
+let cellSize = window.layout.cellSize; // always 24
 
-function getCellSize() {
-    return window.layout?.cellSize || 24;
-}
+
 
 let gridCols, gridRows;
 let allCells = [];
@@ -156,22 +154,12 @@ function initGrid() {
             const cell = new Cell(row, col);
 
             // Header fully filled
-            if (row < topZoneRowCount) {
+            if (row <= topZoneRowCount) {
                 cell.alpha = 1;
                 cell.targetAlpha = 1;
             }
 
-            // Extra panel row: fill with background color
-            if (row === topZoneRowCount) {
-                cell.alpha = 1; // fully opaque
-                cell.targetAlpha = 1;
-                // Optional: force bg color if needed
-                cell.draw = function () {
-                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--header-color');
-                    ctx.globalAlpha = 1;
-                    ctx.fillRect(this.x, this.y, cellSize, cellSize);
-                }
-            }
+
 
             allCells.push(cell);
         }
@@ -271,7 +259,7 @@ function animate() {
 ---------------------------------*/
 function resizeCanvas() {
     layoutVars = getLayoutVars();
-    cellSize = getCellSize(); // THIS LINE IS CRITICAL
+    /*cellSize = getCellSize(); // THIS LINE IS CRITICAL*/
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

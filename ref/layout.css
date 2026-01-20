@@ -16,9 +16,9 @@ body {
 }
 
 :root {
-    --bg-color: #341539;
-    --header-color: #ffffff;
-    --text-color: #000000;
+    --bg-color: #ffffff;
+    --header-color: #000000;
+    --text-color: #ffffff;
     --cell-fill-color: #ffffff;
     --accent-color: #ffffff;
 }
@@ -32,7 +32,7 @@ body {
     height: 100vh;
     z-index: 50;
     pointer-events: none;
-    mix-blend-mode:  difference;
+    mix-blend-mode:  overlay;
 }
 
 
@@ -65,7 +65,7 @@ header#header {
 
 #links-panel {
     position: fixed; /* anchor to viewport */
-    top: calc(var(--cell-size) * (var(--header-rows) + 0.5)); /* center panel on extra row */
+    top: calc(var(--cell-size) * (var(--header-rows)) - (var(--cell-size))); /* center panel on extra row */
     left: 50%; /* center horizontally */
     transform: translateX(-50%);
     display: flex;
@@ -81,8 +81,9 @@ header#header {
         font-family: 'Inter', sans-serif; /* modern sans font for links */
         font-weight: 500;
         font-size: 0.9rem;
-        color: var(--header-color);
+        color: var(--text-color);
         text-decoration: none;
+        text-transform: uppercase;
     }
 
         #links-panel a:hover {
@@ -111,7 +112,7 @@ header#header {
 /* Main content area */
 main#content {
     position: relative;
-    z-index: 5;
+    z-index: 1;
     padding: 4rem 2rem;
     margin-top: var(--header-height, 15vh); /* fallback 15% of viewport */
     max-width: 1200px;
@@ -172,79 +173,12 @@ main#content {
         margin-bottom: 0;
     }
 
-.carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    margin: 2rem auto;
-    overflow: hidden;
-}
 
-.carousel {
-    display: flex;
-    transition: transform 0.5s ease;
-}
 
-    .carousel img {
-        width: 100%;
-        flex-shrink: 0;
-        display: block;
-        border: 2px solid var(--grid-line-color);
-    }
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    z-index: 5;
-    transition: background 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-    .carousel-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .carousel-btn.prev {
-        left: 10px;
-    }
-
-    .carousel-btn.next {
-        right: 10px;
-    }
-
-.carousel-dots {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    background: var(--grid-line-color);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-    .dot.active {
-        background: var(--accent-color);
-    }
-
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .content {
         padding: 2rem 1rem;
+        z-index: 5;
     }
 
     .project {

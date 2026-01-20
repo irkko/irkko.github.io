@@ -1,59 +1,32 @@
 ﻿/* -------------------------------
-   Layout Variables
+   Layout Variables (fixed)
 ---------------------------------*/
 window.layout = {
-    cellSize: 12,
-    headerRows: 10,
+    cellSize: 18,       // <-- fixed cell size
+    headerRows: 6,      // number of rows in header
+    sideWidthPercent: 0.1,
+    centerWidthPercent: 0.85
 };
 
-function updateCellSize() {
-    if (window.innerWidth < 768) {
-        // smaller devices → scale proportionally
-        cellSize = Math.floor(24 * (window.innerWidth / 768));
-    } else {
-        // desktop
-        cellSize = 24;
-    }
-
-    const headerHeightPx = layout.headerRows * cellSize;
-
-    document.documentElement.style.setProperty(
-        '--header-height',
-        `${headerHeightPx}px`
-    );
+// Set CSS variables once on load
+function setCSSVars() {
+    const root = document.documentElement;
+    root.style.setProperty('--cell-size', `${window.layout.cellSize}px`);
+    root.style.setProperty('--header-height', `${window.layout.cellSize * window.layout.headerRows}px`);
+    root.style.setProperty('--header-rows', `${window.layout.headerRows}`);
 }
 
+setCSSVars();
 
-
-
-const headerRows = 6; // number of rows in header
-function updateHeaderHeight() {
-    const headerHeight = layout.headerRows * layout.cellSize;
-    document.documentElement.style.setProperty(
-        '--header-height',
-        `${headerHeight}px`
-    );
-}
-
-function onResize() {
-    updateCellSize();
-    updateHeaderHeight();
-   
-}
-
-window.addEventListener('resize', onResize);
-
-
-
-
-
-// Grab values from CSS variables
+// Grab values from CSS variables (for shader.js and layout)
 function getLayoutVars() {
     const root = getComputedStyle(document.documentElement);
     return {
-        headerHeight: parseFloat(root.getPropertyValue('--header-height')) * window.innerHeight / 100,
-        sideWidthPercent: parseFloat(root.getPropertyValue('--side-width-percent')), // 0-1
-        centerWidthPercent: parseFloat(root.getPropertyValue('--center-width-percent'))
+        cellSize: window.layout.cellSize, // fixed
+        headerRows: window.layout.headerRows,
+        headerHeight: parseFloat(root.getPropertyValue('--header-height')),
+        sideWidthPercent: window.layout.sideWidthPercent,
+        centerWidthPercent: window.layout.centerWidthPercent
     };
 }
 
@@ -63,6 +36,7 @@ const rightSide = document.querySelector('.side.right');
 const header = document.getElementById('header');
 const content = document.getElementById('content');
 
+// Layout application
 function resizeLayout() {
     const layout = getLayoutVars();
 
@@ -78,4 +52,5 @@ function resizeLayout() {
     rightSide.style.height = `${window.innerHeight}px`;
 }
 
-
+window.addEventListener('resize', resizeLayout);
+resizeLayout();
