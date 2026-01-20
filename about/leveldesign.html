@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irko Kekman - Level Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --grid-line-color: #000000;
+            --cell-fill-color: #ffffff;
+            --accent-color: #ffffff;
+        }
+
+        #gridCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-color);
+            z-index: 10;
+            border-bottom: 2px solid var(--grid-line-color);
+        }
+
+        .hero-content {
+            text-align: center;
+            mix-blend-mode: difference;
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+            .hero h1 .subtitle-line {
+                font-size: clamp(1.1rem, 3.5vw, 2.1rem);
+                display: block;
+                margin-top: 0.5rem;
+            }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.99rem, 2.2vw, 1.32rem);
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: var(--text-color);
+            margin-top: 0.5rem;
+        }
+
+        .content {
+            position: relative;
+            z-index: 5;
+            background: transparent;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 20vh auto 0;
+        }
+
+        .project {
+            margin-bottom: 6rem;
+        }
+
+            .project h2 {
+                font-family: 'Press Start 2P', monospace;
+                font-size: clamp(1.2rem, 3vw, 2rem);
+                margin-bottom: 2rem;
+                line-height: 1.6;
+            }
+
+            .project h3 {
+                font-size: 1.5rem;
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .project p, .project li {
+                font-size: 1rem;
+                line-height: 1.8;
+                font-weight: 300;
+            }
+
+            .project p {
+                margin-bottom: 1rem;
+            }
+
+            .project ul {
+                margin-left: 2rem;
+            }
+
+            .project > ul > li {
+                margin-bottom: 1.5rem;
+            }
+
+                .project > ul > li > ul {
+                    margin-top: 1rem;
+                    margin-bottom: 0;
+                }
+
+            .project ul ul li {
+                margin-bottom: 1rem;
+            }
+
+                .project ul ul li:last-child {
+                    margin-bottom: 1.5rem;
+                }
+
+            .project > ul > li:last-child {
+                margin-bottom: 0;
+            }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+            .carousel img {
+                width: 100%;
+                flex-shrink: 0;
+                display: block;
+                border: 2px solid var(--grid-line-color);
+            }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 5;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .carousel-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            .carousel-btn.prev {
+                left: 10px;
+            }
+
+            .carousel-btn.next {
+                right: 10px;
+            }
+
+        .carousel-dots {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            background: var(--grid-line-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .dot.active {
+                background: var(--accent-color);
+            }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 2rem 1rem;
+            }
+
+            .project {
+                margin-bottom: 4rem;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gridCanvas"></canvas>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Irko Kekman<br><span class="subtitle-line">Level Designer</span></h1>
+            <p class="hero-subtitle">growing levels from systems</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="project">
+            <h2>Level Design & Controlled Randomization – Willow Guard</h2>
+
+            <h3>Static Level Design</h3>
+            <ul>
+                <li>Designed and built ~15 static levels across multiple zones.</li>
+                <li>Focused on achieving strong visual variety and readability using highly limited tilesets.</li>
+                <li>Emphasized creative composition, layering, and reuse of assets to avoid repetition.</li>
+            </ul>
+
+            <div class="carousel-container">
+                <div class="carousel" id="carousel1">
+                    <img src="images/leveldesign/image1.png" alt="Willow Guard Screenshot 1">
+                    <img src="images/leveldesign/image2.png" alt="Willow Guard Screenshot 2">
+                    <img src="images/leveldesign/image3.png" alt="Willow Guard Screenshot 3">
+                    <img src="images/leveldesign/image4.png" alt="Willow Guard Screenshot 4">
+                    <img src="images/leveldesign/image5.png" alt="Willow Guard Screenshot 5">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                <div class="carousel-dots" id="dots1"></div>
+            </div>
+
+            <h3>Controlled Randomization (Fields Zone)</h3>
+            <ul>
+                <li>
+                    Refactored the Fields zone from:
+                    <ul>
+                        <li>5 fully static rooms</li>
+                        <li>into 5 base rooms with multiple randomized elements</li>
+                    </ul>
+                </li>
+                <li>
+                    Randomized components include:
+                    <ul>
+                        <li>Obstacle placement</li>
+                        <li>Environmental art</li>
+                        <li>Loot positioning</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="carousel-container">
+                <div class="carousel" id="carousel2">
+                    <img src="images/leveldesign/image1.png" alt="Fields Zone Screenshot 1">
+                    <img src="images/leveldesign/image2.png" alt="Fields Zone Screenshot 2">
+                    <img src="images/leveldesign/image3.png" alt="Fields Zone Screenshot 3">
+                    <img src="images/leveldesign/image4.png" alt="Fields Zone Screenshot 4">
+                    <img src="images/leveldesign/image5.png" alt="Fields Zone Screenshot 5">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('carousel2', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel('carousel2', 1)">›</button>
+                <div class="carousel-dots" id="dots2"></div>
+            </div>
+
+            <ul>
+                <li>Preserved core layout structure to maintain pacing, navigation clarity, and encounter balance.</li>
+                <li>Result: increased replayability without compromising authored level flow.</li>
+            </ul>
+
+            <h3>Playtesting & Research</h3>
+            <ul>
+                <li>Conducted A/B testing comparing static and randomized versions of the Fields zone.</li>
+                <li>Analyzed player behavior and engagement metrics.</li>
+                <li>Documented findings in an academic research paper (Bachelor's thesis), evaluating the impact of environmental randomization on player experience.</li>
+            </ul>
+
+            <h3>Technical Polish</h3>
+            <ul>
+                <li>
+                    Identified and fixed multiple:
+                    <ul>
+                        <li>Collider issues</li>
+                        <li>Tile alignment and tiling artifacts</li>
+                    </ul>
+                </li>
+                <li>Improved overall stability and visual consistency of levels.</li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <h2>Procedural World & Level Generation – Caverns & Catlings</h2>
+
+            <h3>World Structure</h3>
+            <ul>
+                <li>The game is structured around a static hub level.</li>
+                <li>The hub contains activities, NPCs, and shortcut exits that unlock through progression.</li>
+                <li>All locations outside the hub are procedurally generated.</li>
+                <li>Nature, caves, and cities do not rely on static layouts.</li>
+            </ul>
+
+            <div class="carousel-container">
+                <div class="carousel" id="carousel3">
+                    <img src="images/leveldesign/image1.png" alt="Caverns Screenshot 1">
+                    <img src="images/leveldesign/image2.png" alt="Caverns Screenshot 2">
+                    <img src="images/leveldesign/image3.png" alt="Caverns Screenshot 3">
+                    <img src="images/leveldesign/image4.png" alt="Caverns Screenshot 4">
+                    <img src="images/leveldesign/image5.png" alt="Caverns Screenshot 5">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('carousel3', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel('carousel3', 1)">›</button>
+                <div class="carousel-dots" id="dots3"></div>
+            </div>
+
+            <h3>Arena-Like Procedural Locations (Perlin Noise–Based)</h3>
+
+            <p><strong>Base Generation</strong></p>
+            <ul>
+                <li>Levels are generated inside fixed square boundaries.</li>
+                <li>2–3 Perlin noise "blobs" are generated and layered on top of each other to define walkable elevation.</li>
+                <li>
+                    Noise thresholds control:
+                    <ul>
+                        <li>Density of solid vs walkable areas</li>
+                        <li>Curvature and smoothness of borders</li>
+                        <li>Overall level openness</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Structural Cleanup</strong></p>
+            <ul>
+                <li>
+                    Generated terrain is analyzed to remove invalid configurations, such as:
+                    <ul>
+                        <li>Walkable tiles without supporting tiles beneath</li>
+                        <li>Isolated or unreachable fragments</li>
+                    </ul>
+                </li>
+                <li>Terrain is adjusted to ensure all walkable areas are physically supported.</li>
+            </ul>
+
+            <p><strong>Border & Traversal Analysis</strong></p>
+            <ul>
+                <li>Walkable area borders are classified (concave / convex).</li>
+                <li>
+                    Border analysis is used to detect valid locations for:
+                    <ul>
+                        <li>Stairs</li>
+                        <li>Trampolines</li>
+                        <li>Climbing areas</li>
+                    </ul>
+                </li>
+                <li>Traversal elements are placed based on local geometry rather than fixed rules.</li>
+            </ul>
+
+            <p><strong>Wall & Collider Generation</strong></p>
+            <ul>
+                <li>Non-traversable borders automatically receive wall tiles.</li>
+                <li>Walls below walkable blobs create the visual impression of hills or mountains.</li>
+                <li>Walls on the upper edges of blobs create a hollow or cut-out look.</li>
+                <li>Colliders are generated only on non-traversable areas to keep traversal fluid.</li>
+            </ul>
+
+            <p><strong>Gameplay Layer</strong></p>
+            <ul>
+                <li>
+                    Walkable areas are further analyzed for placement of:
+                    <ul>
+                        <li>Enemies</li>
+                        <li>Loot</li>
+                        <li>Puzzles</li>
+                        <li>Secret zones</li>
+                    </ul>
+                </li>
+                <li>The center of the arena is weighted as the most dangerous and most rewarding zone.</li>
+                <li>Select narratively important arenas can replace the center with hand-crafted set pieces while keeping the surrounding area procedural.</li>
+            </ul>
+
+            <div class="carousel-container">
+                <div class="carousel" id="carousel4">
+                    <img src="images/leveldesign/image1.png" alt="Arena Screenshot 1">
+                    <img src="images/leveldesign/image2.png" alt="Arena Screenshot 2">
+                    <img src="images/leveldesign/image3.png" alt="Arena Screenshot 3">
+                    <img src="images/leveldesign/image4.png" alt="Arena Screenshot 4">
+                    <img src="images/leveldesign/image5.png" alt="Arena Screenshot 5">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('carousel4', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel('carousel4', 1)">›</button>
+                <div class="carousel-dots" id="dots4"></div>
+            </div>
+
+            <h3>Cave-Like Procedural Locations (Cellular Automata)</h3>
+
+            <p><strong>Base Generation</strong></p>
+            <ul>
+                <li>Levels are generated within rectangular boundaries using cellular automata.</li>
+                <li>The algorithm carves out organic walkable spaces surrounded by irregular solid obstacles.</li>
+                <li>
+                    Parameters control:
+                    <ul>
+                        <li>Obstacle density</li>
+                        <li>Size of chambers</li>
+                        <li>Degree of organic irregularity</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Walls & Colliders</strong></p>
+            <ul>
+                <li>Wall and collider generation follows the same concave / convex border logic as arena levels.</li>
+                <li>Ensures visual and mechanical consistency across different procedural types.</li>
+            </ul>
+
+            <p><strong>Algorithmic Flexibility</strong></p>
+            <ul>
+                <li>Perlin noise and cellular automata share a common post-processing pipeline.</li>
+                <li>
+                    Visual and structural variety is achieved by adjusting a small set of parameters:
+                    <ul>
+                        <li>Noise scale</li>
+                        <li>Obstacle density</li>
+                        <li>Border curvature</li>
+                    </ul>
+                </li>
+                <li>
+                    Variations include:
+                    <ul>
+                        <li>Placing multiple Perlin "mountains" side by side</li>
+                        <li>Shifting camera framing to introduce central splits or valleys</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Planned: Urban Procedural Locations</h3>
+            <ul>
+                <li>
+                    Urban areas are generated by:
+                    <ul>
+                        <li>Creating multiple rectangular rooftop zones</li>
+                        <li>Connecting them with traversable paths</li>
+                    </ul>
+                </li>
+                <li>Boolean operations are applied to avoid simple box layouts and produce more complex silhouettes.</li>
+                <li>The design focuses on rooftop traversal, fitting the cat-centric movement mechanics.</li>
+            </ul>
+
+            <div class="carousel-container">
+                <div class="carousel" id="carousel5">
+                    <img src="images/leveldesign/image1.png" alt="Procedural Screenshot 1">
+                    <img src="images/leveldesign/image2.png" alt="Procedural Screenshot 2">
+                    <img src="images/leveldesign/image3.png" alt="Procedural Screenshot 3">
+                    <img src="images/leveldesign/image4.png" alt="Procedural Screenshot 4">
+                    <img src="images/leveldesign/image5.png" alt="Procedural Screenshot 5">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('carousel5', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel('carousel5', 1)">›</button>
+                <div class="carousel-dots" id="dots5"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const FADE_DURATION = 200;
+        const MIN_FILL_DURATION = 4000;
+        const MAX_FILL_DURATION = 5000;
+        const MIN_ACTIVE_CELLS = 15;
+        const MAX_ACTIVE_CELLS = 20;
+
+        const TOP_BG_RATIO = 0.05;     // 5% allowed background in top rows
+        const SIDE_FILL_RATIO = 0.10; // 10% allowed filled in side columns
+ 
+
+        const SQUARE_2x2_CHANCE = 0.35;
+        const SQUARE_3x3_CHANCE = 0.15;
+
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+        let cellSize = 24;
+        let gridCols, gridRows;
+        let allCells = [];
+        let largeSquares = [];
+
+        function updateCellSize() {
+            cellSize = window.innerWidth < 768
+                ? Math.floor(24 * (window.innerWidth / 768))
+                : 24;
+        }
+
+        function resizeCanvas() {
+            updateCellSize();
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initGrid();
+        }
+
+       // const TOP_BG_RATIO = 0.10;
+
+        function topRowsBgRatio() {
+            const topCells = allCells.filter(c => c.row < 8);
+            const bgCount = topCells.filter(c => c.alpha === 0).length;
+            return bgCount / topCells.length;
+        }
+
+
+        class CellState {
+            constructor(row, col) {
+                this.row = row;
+                this.col = col;
+                this.x = col * cellSize;
+                this.y = row * cellSize;
+                this.alpha = 0;
+                this.targetAlpha = 0;
+                this.isActive = false;
+                this.fadeStartTime = 0;
+                this.fillEndTime = 0;
+                this.isPermanent = false;
+                this.isPartOfLargeSquare = false;
+            }
+
+            startInversion() {
+                this.isActive = true;
+                this.targetAlpha = this.alpha > 0.5 ? 0 : 1;
+                this.fadeStartTime = Date.now();
+                const fillDuration = MIN_FILL_DURATION + Math.random() * (MAX_FILL_DURATION - MIN_FILL_DURATION);
+                this.fillEndTime = this.fadeStartTime + FADE_DURATION + fillDuration;
+            }
+
+            update() {
+                if (this.isPermanent) {
+                    this.alpha = 1;
+                    return;
+                }
+
+                const now = Date.now();
+
+                if (this.targetAlpha === 1 && this.alpha < 1) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.min(1, elapsed / FADE_DURATION);
+                }
+
+                if (this.isActive && now >= this.fillEndTime && this.alpha === this.targetAlpha) {
+
+                    // prevent top rows from collapsing into bg
+                    if (
+                        this.row < 8 &&
+                        this.targetAlpha === 1 &&
+                        topRowsBgRatio() >= TOP_BG_RATIO
+                    ) {
+                        // extend filled state instead of fading out
+                        this.fillEndTime = now + MIN_FILL_DURATION;
+                        return;
+                    }
+
+                    this.targetAlpha = this.targetAlpha === 1 ? 0 : 1;
+                    this.fadeStartTime = now;
+                }
+
+                if (this.targetAlpha === 0 && this.alpha > 0) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.max(0, 1 - (elapsed / FADE_DURATION));
+
+                    if (this.alpha === 0) {
+                        this.isActive = false;
+                    }
+                }
+            }
+
+            draw() {
+                if (this.alpha > 0) {
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--cell-fill-color');
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillRect(this.x, this.y, cellSize, cellSize);
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+        class LargeSquare {
+            constructor(row, col, cells) {
+                this.row = row;
+                this.col = col;
+                this.cells = cells;
+                this.alpha = 0;
+                this.targetAlpha = 0;
+                this.isActive = false;
+                this.fadeStartTime = 0;
+                this.fillEndTime = 0;
+            }
+
+            startInversion() {
+                this.isActive = true;
+                const avgAlpha = this.cells.reduce((sum, c) => sum + c.alpha, 0) / 4;
+                this.targetAlpha = avgAlpha > 0.5 ? 0 : 1;
+                this.fadeStartTime = Date.now();
+                const fillDuration = MIN_FILL_DURATION + Math.random() * (MAX_FILL_DURATION - MIN_FILL_DURATION);
+                this.fillEndTime = this.fadeStartTime + FADE_DURATION + fillDuration;
+
+                this.cells.forEach(cell => {
+                    cell.isActive = true;
+                    cell.isPartOfLargeSquare = true;
+                });
+            }
+
+
+
+
+
+            update() {
+                const now = Date.now();
+
+                if (this.targetAlpha === 1 && this.alpha < 1) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.min(1, elapsed / FADE_DURATION);
+                }
+
+                if (this.isActive && now >= this.fillEndTime && this.alpha === this.targetAlpha) {
+                    this.targetAlpha = this.targetAlpha === 1 ? 0 : 1;
+                    this.fadeStartTime = now;
+                }
+
+                if (this.targetAlpha === 0 && this.alpha > 0) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.max(0, 1 - (elapsed / FADE_DURATION));
+
+                    if (this.alpha === 0) {
+                        this.isActive = false;
+                        this.cells.forEach(cell => {
+                            cell.isActive = false;
+                            cell.isPartOfLargeSquare = false;
+                        });
+                    }
+                }
+            }
+
+            draw() {
+                if (this.alpha > 0) {
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--cell-fill-color');
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillRect(this.col * cellSize, this.row * cellSize, cellSize * 2, cellSize * 2);
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+        class LargeSquare3x3 {
+            constructor(row, col, cells) {
+                this.row = row;
+                this.col = col;
+                this.cells = cells;
+                this.alpha = 0;
+                this.targetAlpha = 0;
+                this.isActive = false;
+                this.fadeStartTime = 0;
+                this.fillEndTime = 0;
+            }
+
+            startInversion() {
+                this.isActive = true;
+                const avgAlpha = this.cells.reduce((sum, c) => sum + c.alpha, 0) / this.cells.length;
+                this.targetAlpha = avgAlpha > 0.5 ? 0 : 1;
+                this.fadeStartTime = Date.now();
+
+                const fillDuration =
+                    MIN_FILL_DURATION +
+                    Math.random() * (MAX_FILL_DURATION - MIN_FILL_DURATION);
+
+                this.fillEndTime = this.fadeStartTime + FADE_DURATION + fillDuration;
+
+                this.cells.forEach(cell => {
+                    cell.isActive = true;
+                    cell.isPartOfLargeSquare = true;
+                });
+            }
+
+            update() {
+                const now = Date.now();
+
+                if (this.targetAlpha === 1 && this.alpha < 1) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.min(1, elapsed / FADE_DURATION);
+                }
+
+                if (this.isActive && now >= this.fillEndTime && this.alpha === this.targetAlpha) {
+                    this.targetAlpha = this.targetAlpha === 1 ? 0 : 1;
+                    this.fadeStartTime = now;
+                }
+
+                if (this.targetAlpha === 0 && this.alpha > 0) {
+                    const elapsed = now - this.fadeStartTime;
+                    this.alpha = Math.max(0, 1 - (elapsed / FADE_DURATION));
+
+                    if (this.alpha === 0) {
+                        this.isActive = false;
+                        this.cells.forEach(cell => {
+                            cell.isActive = false;
+                            cell.isPartOfLargeSquare = false;
+                        });
+                    }
+                }
+            }
+
+            draw() {
+                if (this.alpha > 0) {
+                    ctx.fillStyle =
+                        getComputedStyle(document.documentElement)
+                            .getPropertyValue('--cell-fill-color');
+
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillRect(
+                        this.col * cellSize,
+                        this.row * cellSize,
+                        cellSize * 3,
+                        cellSize * 3
+                    );
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+
+        function isInActiveZone(row, col) {
+            const inTopRows = row < 8;
+            const inLeftCols = col < 8;
+            const inRightCols = col >= gridCols - 9;
+
+            return inTopRows || inLeftCols || inRightCols;
+        }
+
+        function getCellAt(row, col) {
+            return allCells.find(c => c.row === row && c.col === col);
+        }
+
+        function canPlaceLargeSquare(row, col) {
+            if (row >= gridRows - 1 || col >= gridCols - 1) return false;
+
+            for (let r = row; r < row + 2; r++) {
+                for (let c = col; c < col + 2; c++) {
+                    if (!isInActiveZone(r, c)) return false;
+                    const cell = getCellAt(r, c);
+                    if (!cell || cell.isActive || cell.isPermanent) return false;
+                }
+            }
+            return true;
+        }
+
+        function canPlaceLargeSquare3x3(row, col) {
+            if (row >= gridRows - 2 || col >= gridCols - 2) return false;
+
+            for (let r = row; r < row + 3; r++) {
+                for (let c = col; c < col + 3; c++) {
+                    if (!isInActiveZone(r, c)) return false;
+
+                    const cell = getCellAt(r, c);
+                    if (!cell || cell.isActive || cell.isPartOfLargeSquare) return false;
+                }
+            }
+            return true;
+        }
+
+
+        function initGrid() {
+            allCells = [];
+            largeSquares = [];
+            gridCols = Math.ceil(canvas.width / cellSize);
+            gridRows = Math.ceil(canvas.height / cellSize);
+
+            for (let row = 0; row < gridRows; row++) {
+                for (let col = 0; col < gridCols; col++) {
+                    const cell = new CellState(row, col);
+
+                    if (row < 8) {
+                        cell.alpha = 1;
+                        cell.targetAlpha = 1;
+                    }
+
+                    allCells.push(cell);
+                }
+            }
+
+            const initialCount = Math.floor(MIN_ACTIVE_CELLS / 2);
+            activateRandomElements(initialCount);
+        }
+
+        function activateRandomElements(count) {
+            for (let i = 0; i < count; i++) {
+                const roll = Math.random();
+
+                if (roll < SQUARE_3x3_CHANCE) {
+                    // try 3x3
+                    const candidates = allCells.filter(c =>
+                        isInActiveZone(c.row, c.col) &&
+                        !c.isActive &&
+                        !c.isPartOfLargeSquare
+                    ).sort(() => Math.random() - 0.5);
+
+                    let placed = false;
+
+                    for (const cell of candidates) {
+                        if (canPlaceLargeSquare3x3(cell.row, cell.col)) {
+                            const cells = [];
+                            for (let r = 0; r < 3; r++) {
+                                for (let c = 0; c < 3; c++) {
+                                    cells.push(getCellAt(cell.row + r, cell.col + c));
+                                }
+                            }
+
+                            const square = new LargeSquare3x3(cell.row, cell.col, cells);
+                            square.startInversion();
+                            largeSquares.push(square);
+                            placed = true;
+                            break;
+                        }
+                    }
+
+                    if (!placed) activateSingleCell();
+
+                } else if (roll < SQUARE_3x3_CHANCE + SQUARE_2x2_CHANCE) {
+
+                    const activeZoneCells = allCells.filter(c =>
+                        isInActiveZone(c.row, c.col) && !c.isActive && !c.isPermanent
+                    );
+
+                    const shuffled = activeZoneCells.sort(() => Math.random() - 0.5);
+                    let placed = false;
+
+                    for (const cell of shuffled) {
+                        if (canPlaceLargeSquare(cell.row, cell.col)) {
+                            const cells = [
+                                getCellAt(cell.row, cell.col),
+                                getCellAt(cell.row, cell.col + 1),
+                                getCellAt(cell.row + 1, cell.col),
+                                getCellAt(cell.row + 1, cell.col + 1)
+                            ];
+
+                            const largeSquare = new LargeSquare(cell.row, cell.col, cells);
+                            largeSquare.startInversion();
+                            largeSquares.push(largeSquare);
+                            placed = true;
+                            break;
+                        }
+                    }
+
+                    if (!placed) {
+                        activateSingleCell();
+                    }
+                } else {
+                    activateSingleCell();
+                }
+            }
+        }
+
+        function activateSingleCell() {
+            const inactiveCells = allCells.filter(c =>
+                isInActiveZone(c.row, c.col) &&
+                !c.isActive &&
+                !c.isPartOfLargeSquare &&
+                (
+                    c.row >= 8 ||           // sides + lower grid
+                    c._needsTopBias === true
+                )
+            );
+
+            if (inactiveCells.length > 0) {
+                const randomIndex = Math.floor(Math.random() * inactiveCells.length);
+                const cell = inactiveCells[randomIndex];
+                cell._needsTopBias = false;
+                cell.startInversion();
+            }
+        }
+
+        function enforceTopRowRatio() {
+            const topCells = allCells.filter(c => c.row < 8);
+            const total = topCells.length;
+
+            const bgCells = topCells.filter(c =>
+                c.alpha === 0 &&
+                !c.isActive &&
+                !c.isPartOfLargeSquare
+            );
+
+            const bgRatio = bgCells.length / total;
+
+            if (bgRatio <= TOP_BG_RATIO) return;
+
+            // too many background cells → bias re-filling
+            bgCells.forEach(c => {
+                c._needsTopBias = true;
+            });
+        }
+
+
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--grid-line-color');
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= gridCols; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, canvas.height);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i <= gridRows; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(canvas.width, i * cellSize);
+                ctx.stroke();
+            }
+
+            allCells.forEach(cell => {
+                cell.update();
+                if (!cell.isPartOfLargeSquare) {
+                    cell.draw();
+                }
+            });
+
+            largeSquares.forEach(square => {
+                square.update();
+                square.draw();
+            });
+
+            largeSquares = largeSquares.filter(s => s.isActive || s.alpha > 0);
+
+            const activeCellCount = allCells.filter(c => c.isActive && !c.isPartOfLargeSquare).length;
+            const activeLargeSquares = largeSquares.filter(s => s.isActive).length;
+            const totalActive = activeCellCount + activeLargeSquares;
+            const targetCount = MIN_ACTIVE_CELLS + Math.floor(Math.random() * (MAX_ACTIVE_CELLS - MIN_ACTIVE_CELLS + 1));
+
+            enforceTopRowRatio();
+
+            if (totalActive < targetCount) {
+                activateRandomElements(targetCount - totalActive);
+            }
+        }
+
+        function animate() {
+            drawGrid();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animate();
+
+        const carousels = {};
+
+        function initCarousel(id) {
+            const carousel = document.getElementById(id);
+            const images = carousel.querySelectorAll('img');
+            const dotsContainer = document.getElementById(id.replace('carousel', 'dots'));
+
+            carousels[id] = {
+                currentIndex: 0,
+                totalImages: images.length
+            };
+
+            for (let i = 0; i < images.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(id, i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function moveCarousel(id, direction) {
+            const data = carousels[id];
+            data.currentIndex = (data.currentIndex + direction + data.totalImages) % data.totalImages;
+            updateCarousel(id);
+        }
+
+        function goToSlide(id, index) {
+            carousels[id].currentIndex = index;
+            updateCarousel(id);
+        }
+
+        function updateCarousel(id) {
+            const carousel = document.getElementById(id);
+            const data = carousels[id];
+            const offset = -data.currentIndex * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+
+            const dotsContainer = document.getElementById(id.replace('carousel', 'dots'));
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === data.currentIndex);
+            });
+        }
+
+        ['carousel1', 'carousel2', 'carousel3', 'carousel4', 'carousel5'].forEach(initCarousel);
+    </script>
+</body>
+</html>
