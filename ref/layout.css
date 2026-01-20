@@ -1,0 +1,142 @@
+/* -------------------------------
+   Base Layout & Typography
+---------------------------------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+:root {
+    --bg-color: #000000;
+    --header-color: #ffffff;
+    --text-color: #000000;
+    --cell-fill-color: #ffffff;
+    --accent-color: #ffffff;
+}
+
+/* Canvas for shader overlay */
+#shaderCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    pointer-events: none;
+    mix-blend-mode: difference;
+}
+
+
+
+
+/* Header */
+header#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--header-color);
+    color: var(--text-color);
+    border-bottom: 2px solid var(--cell-fill-color);
+}
+
+/* Links panel inside header */
+#links-panel {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+    #links-panel a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        #links-panel a:hover {
+            text-decoration: underline;
+        }
+
+
+
+/* Side panels (for reference and safe zones) */
+.side {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    background: transparent;
+    z-index: 40;
+}
+
+    /* Left and right sides */
+    .side.left {
+        left: 0;
+    }
+
+    .side.right {
+        right: 0;
+    }
+
+/* Main content area */
+main#content {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 2rem;
+    margin-top: var(--header-height, 15vh); /* fallback 15% of viewport */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Carousel container style (just layout, logic elsewhere) */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+    .carousel img {
+        width: 100%;
+        flex-shrink: 0;
+        display: block;
+        border: 2px solid var(--cell-fill-color);
+    }
+
+/* Orientation-specific layouts */
+@media (orientation: portrait) {
+    :root {
+        /* --header-height: 120px; /* header height as % of viewport _______while i need 120px if cellSize = 24     */
+        --side-width-percent: 0.15; /* 15% sides */
+        --center-width-percent: 0.8; /* center safe zone */
+    }
+}
+
+@media (orientation: landscape) {
+    :root {
+        /*--header-height: 120px;*/ 
+        --side-width-percent: 0.08; /* slightly smaller sides */
+        --center-width-percent: 0.85;
+    }
+}

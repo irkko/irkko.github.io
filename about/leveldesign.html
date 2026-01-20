@@ -519,6 +519,8 @@
         let allCells = [];
         let largeSquares = [];
 
+        let topZoneRowCount = 0; // <- add this
+
         let sideColCount = 0;
         // let sideRowCount = 0;
         let centerStartCol = 0;
@@ -815,7 +817,7 @@
             gridCols = Math.ceil(canvas.width / cellSize);
             gridRows = Math.ceil(canvas.height / cellSize);
 
-            let topZoneRowCount = Math.max(
+            topZoneRowCount = Math.max(
                 1,
                 Math.floor(gridRows * TOP_ZONE_RATIO)
             );
