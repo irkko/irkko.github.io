@@ -161,6 +161,7 @@ function initGrid() {
 
 
 
+
             allCells.push(cell);
         }
     }
