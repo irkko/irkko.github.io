@@ -38,11 +38,11 @@ function updateHeaderHeight() {
 function onResize() {
     updateCellSize();
     updateHeaderHeight();
-    resizeCanvas(); // your shader grid
+   
 }
 
 window.addEventListener('resize', onResize);
-onResize(); // initial call
+
 
 
 
@@ -78,5 +78,4 @@ function resizeLayout() {
     rightSide.style.height = `${window.innerHeight}px`;
 }
 
-window.addEventListener('resize', resizeLayout);
-resizeLayout();
+

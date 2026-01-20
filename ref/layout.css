@@ -10,13 +10,13 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #000;
+    background: #341539;
     color: #fff;
     overflow-x: hidden;
 }
 
 :root {
-    --bg-color: #000000;
+    --bg-color: #341539;
     --header-color: #ffffff;
     --text-color: #000000;
     --cell-fill-color: #ffffff;
@@ -32,7 +32,7 @@ body {
     height: 100vh;
     z-index: 50;
     pointer-events: none;
-    mix-blend-mode: difference;
+    mix-blend-mode:  difference;
 }
 
 
@@ -52,26 +52,42 @@ header#header {
     align-items: center;
     background: var(--header-color);
     color: var(--text-color);
-    border-bottom: 2px solid var(--cell-fill-color);
+    /*border-bottom: 2px solid var(--cell-fill-color); */
+    text-align: center; /* ensures inline text centers too */
+
+    font-family: 'Press Start 2P', monospace; /* pixel font for main header text */
+    font-size: clamp(12px, 2vw, 24px); /* responsive pixelated look */
+    letter-spacing: 5px;
+    /* text-transform: uppercase;*/
+    -webkit-font-smoothing: none;
+    /*-moz-osx-font-smoothing: grayscale;*/
 }
 
-/* Links panel inside header */
 #links-panel {
-    margin-top: 0.5rem;
+    position: fixed; /* anchor to viewport */
+    top: calc(var(--cell-size) * (var(--header-rows) + 0.5)); /* center panel on extra row */
+    left: 50%; /* center horizontally */
+    transform: translateX(-50%);
     display: flex;
-    gap: 1rem;
+    justify-content: center;
+    gap: 1rem; /* spacing between links */
+    z-index: 15; /* above shader and header */
 }
+
+
+
 
     #links-panel a {
-        color: var(--text-color);
-        text-decoration: none;
+        font-family: 'Inter', sans-serif; /* modern sans font for links */
         font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--header-color);
+        text-decoration: none;
     }
 
         #links-panel a:hover {
             text-decoration: underline;
         }
-
 
 
 /* Side panels (for reference and safe zones) */
@@ -95,15 +111,67 @@ header#header {
 /* Main content area */
 main#content {
     position: relative;
-    z-index: 10;
+    z-index: 5;
     padding: 4rem 2rem;
     margin-top: var(--header-height, 15vh); /* fallback 15% of viewport */
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 10vh;
+    margin-right: 10vh;
 }
 
-/* Carousel container style (just layout, logic elsewhere) */
+.project {
+    margin-bottom: 6rem;
+}
+
+    .project h2 {
+        font-family: 'Press Start 2P', monospace;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .project h3 {
+        font-size: 1.5rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .project p, .project li {
+        font-size: 1rem;
+        line-height: 1.8;
+        font-weight: 300;
+    }
+
+    .project p {
+        margin-bottom: 1rem;
+    }
+
+    .project ul {
+        margin-left: 2rem;
+    }
+
+    .project > ul > li {
+        margin-bottom: 1.5rem;
+    }
+
+        .project > ul > li > ul {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+    .project ul ul li {
+        margin-bottom: 1rem;
+    }
+
+        .project ul ul li:last-child {
+            margin-bottom: 1.5rem;
+        }
+
+    .project > ul > li:last-child {
+        margin-bottom: 0;
+    }
+
 .carousel-container {
     position: relative;
     width: 100%;
@@ -121,8 +189,74 @@ main#content {
         width: 100%;
         flex-shrink: 0;
         display: block;
-        border: 2px solid var(--cell-fill-color);
+        border: 2px solid var(--grid-line-color);
     }
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 5;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .carousel-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .carousel-btn.prev {
+        left: 10px;
+    }
+
+    .carousel-btn.next {
+        right: 10px;
+    }
+
+.carousel-dots {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background: var(--grid-line-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .dot.active {
+        background: var(--accent-color);
+    }
+
+@media (max-width: 768px) {
+    .content {
+        padding: 2rem 1rem;
+    }
+
+    .project {
+        margin-bottom: 4rem;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+}
 
 /* Orientation-specific layouts */
 @media (orientation: portrait) {
@@ -136,7 +270,7 @@ main#content {
 @media (orientation: landscape) {
     :root {
         /*--header-height: 120px;*/ 
-        --side-width-percent: 0.08; /* slightly smaller sides */
-        --center-width-percent: 0.85;
+        --side-width-percent: 0.05; /* slightly smaller sides */
+        --center-width-percent: 0.9;
     }
 }

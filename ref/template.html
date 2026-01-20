@@ -4,28 +4,284 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
 
     <header id="header">
         <div class="header-content">
-            <h1>Irko Kekman</h1>
-            <p>Level Designer</p>
-            <nav id="links-panel">
-                <a href="/portfolio1">Portfolio 1</a>
-                <a href="/portfolio2">Portfolio 2</a>
-            </nav>
+            <h1>Irina "Irko" Kekman</h1>
+            <p>PROCEDURAL RULESMITH</p>
         </div>
     </header>
+
+    <!-- Move links-panel outside header -->
+    <div id="links-panel">
+        <a href="/portfolio1">Portfolio 1</a>
+        <a href="/portfolio2">Portfolio 2</a>
+    </div>
 
     <canvas id="shaderCanvas"></canvas>
     <aside class="side left"></aside>
     <aside class="side right"></aside>
 
     <main id="content">
-        <!-- Page-specific content goes here -->
+
+        <div class="content">
+            <div class="project">
+                <h2>Level Design & Controlled Randomization – Willow Guard</h2>
+
+                <h3>Static Level Design</h3>
+                <ul>
+                    <li>Designed and built ~15 static levels across multiple zones.</li>
+                    <li>Focused on achieving strong visual variety and readability using highly limited tilesets.</li>
+                    <li>Emphasized creative composition, layering, and reuse of assets to avoid repetition.</li>
+                </ul>
+
+                <div class="carousel-container">
+                    <div class="carousel" id="carousel1">
+                        <img src="images/leveldesign/image1.png" alt="Willow Guard Screenshot 1">
+                        <img src="images/leveldesign/image2.png" alt="Willow Guard Screenshot 2">
+                        <img src="images/leveldesign/image3.png" alt="Willow Guard Screenshot 3">
+                        <img src="images/leveldesign/image4.png" alt="Willow Guard Screenshot 4">
+                        <img src="images/leveldesign/image5.png" alt="Willow Guard Screenshot 5">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                    <div class="carousel-dots" id="dots1"></div>
+                </div>
+
+                <h3>Controlled Randomization (Fields Zone)</h3>
+                <ul>
+                    <li>
+                        Refactored the Fields zone from:
+                        <ul>
+                            <li>5 fully static rooms</li>
+                            <li>into 5 base rooms with multiple randomized elements</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Randomized components include:
+                        <ul>
+                            <li>Obstacle placement</li>
+                            <li>Environmental art</li>
+                            <li>Loot positioning</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="carousel-container">
+                    <div class="carousel" id="carousel2">
+                        <img src="images/leveldesign/image1.png" alt="Fields Zone Screenshot 1">
+                        <img src="images/leveldesign/image2.png" alt="Fields Zone Screenshot 2">
+                        <img src="images/leveldesign/image3.png" alt="Fields Zone Screenshot 3">
+                        <img src="images/leveldesign/image4.png" alt="Fields Zone Screenshot 4">
+                        <img src="images/leveldesign/image5.png" alt="Fields Zone Screenshot 5">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel2', -1)">‹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel2', 1)">›</button>
+                    <div class="carousel-dots" id="dots2"></div>
+                </div>
+
+                <ul>
+                    <li>Preserved core layout structure to maintain pacing, navigation clarity, and encounter balance.</li>
+                    <li>Result: increased replayability without compromising authored level flow.</li>
+                </ul>
+
+                <h3>Playtesting & Research</h3>
+                <ul>
+                    <li>Conducted A/B testing comparing static and randomized versions of the Fields zone.</li>
+                    <li>Analyzed player behavior and engagement metrics.</li>
+                    <li>Documented findings in an academic research paper (Bachelor's thesis), evaluating the impact of environmental randomization on player experience.</li>
+                </ul>
+
+                <h3>Technical Polish</h3>
+                <ul>
+                    <li>
+                        Identified and fixed multiple:
+                        <ul>
+                            <li>Collider issues</li>
+                            <li>Tile alignment and tiling artifacts</li>
+                        </ul>
+                    </li>
+                    <li>Improved overall stability and visual consistency of levels.</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <h2>Procedural World & Level Generation – Caverns & Catlings</h2>
+
+                <h3>World Structure</h3>
+                <ul>
+                    <li>The game is structured around a static hub level.</li>
+                    <li>The hub contains activities, NPCs, and shortcut exits that unlock through progression.</li>
+                    <li>All locations outside the hub are procedurally generated.</li>
+                    <li>Nature, caves, and cities do not rely on static layouts.</li>
+                </ul>
+
+                <div class="carousel-container">
+                    <div class="carousel" id="carousel3">
+                        <img src="images/leveldesign/image1.png" alt="Caverns Screenshot 1">
+                        <img src="images/leveldesign/image2.png" alt="Caverns Screenshot 2">
+                        <img src="images/leveldesign/image3.png" alt="Caverns Screenshot 3">
+                        <img src="images/leveldesign/image4.png" alt="Caverns Screenshot 4">
+                        <img src="images/leveldesign/image5.png" alt="Caverns Screenshot 5">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel3', -1)">‹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel3', 1)">›</button>
+                    <div class="carousel-dots" id="dots3"></div>
+                </div>
+
+                <h3>Arena-Like Procedural Locations (Perlin Noise–Based)</h3>
+
+                <p><strong>Base Generation</strong></p>
+                <ul>
+                    <li>Levels are generated inside fixed square boundaries.</li>
+                    <li>2–3 Perlin noise "blobs" are generated and layered on top of each other to define walkable elevation.</li>
+                    <li>
+                        Noise thresholds control:
+                        <ul>
+                            <li>Density of solid vs walkable areas</li>
+                            <li>Curvature and smoothness of borders</li>
+                            <li>Overall level openness</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>Structural Cleanup</strong></p>
+                <ul>
+                    <li>
+                        Generated terrain is analyzed to remove invalid configurations, such as:
+                        <ul>
+                            <li>Walkable tiles without supporting tiles beneath</li>
+                            <li>Isolated or unreachable fragments</li>
+                        </ul>
+                    </li>
+                    <li>Terrain is adjusted to ensure all walkable areas are physically supported.</li>
+                </ul>
+
+                <p><strong>Border & Traversal Analysis</strong></p>
+                <ul>
+                    <li>Walkable area borders are classified (concave / convex).</li>
+                    <li>
+                        Border analysis is used to detect valid locations for:
+                        <ul>
+                            <li>Stairs</li>
+                            <li>Trampolines</li>
+                            <li>Climbing areas</li>
+                        </ul>
+                    </li>
+                    <li>Traversal elements are placed based on local geometry rather than fixed rules.</li>
+                </ul>
+
+                <p><strong>Wall & Collider Generation</strong></p>
+                <ul>
+                    <li>Non-traversable borders automatically receive wall tiles.</li>
+                    <li>Walls below walkable blobs create the visual impression of hills or mountains.</li>
+                    <li>Walls on the upper edges of blobs create a hollow or cut-out look.</li>
+                    <li>Colliders are generated only on non-traversable areas to keep traversal fluid.</li>
+                </ul>
+
+                <p><strong>Gameplay Layer</strong></p>
+                <ul>
+                    <li>
+                        Walkable areas are further analyzed for placement of:
+                        <ul>
+                            <li>Enemies</li>
+                            <li>Loot</li>
+                            <li>Puzzles</li>
+                            <li>Secret zones</li>
+                        </ul>
+                    </li>
+                    <li>The center of the arena is weighted as the most dangerous and most rewarding zone.</li>
+                    <li>Select narratively important arenas can replace the center with hand-crafted set pieces while keeping the surrounding area procedural.</li>
+                </ul>
+
+                <div class="carousel-container">
+                    <div class="carousel" id="carousel4">
+                        <img src="images/leveldesign/image1.png" alt="Arena Screenshot 1">
+                        <img src="images/leveldesign/image2.png" alt="Arena Screenshot 2">
+                        <img src="images/leveldesign/image3.png" alt="Arena Screenshot 3">
+                        <img src="images/leveldesign/image4.png" alt="Arena Screenshot 4">
+                        <img src="images/leveldesign/image5.png" alt="Arena Screenshot 5">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel4', -1)">‹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel4', 1)">›</button>
+                    <div class="carousel-dots" id="dots4"></div>
+                </div>
+
+                <h3>Cave-Like Procedural Locations (Cellular Automata)</h3>
+
+                <p><strong>Base Generation</strong></p>
+                <ul>
+                    <li>Levels are generated within rectangular boundaries using cellular automata.</li>
+                    <li>The algorithm carves out organic walkable spaces surrounded by irregular solid obstacles.</li>
+                    <li>
+                        Parameters control:
+                        <ul>
+                            <li>Obstacle density</li>
+                            <li>Size of chambers</li>
+                            <li>Degree of organic irregularity</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>Walls & Colliders</strong></p>
+                <ul>
+                    <li>Wall and collider generation follows the same concave / convex border logic as arena levels.</li>
+                    <li>Ensures visual and mechanical consistency across different procedural types.</li>
+                </ul>
+
+                <p><strong>Algorithmic Flexibility</strong></p>
+                <ul>
+                    <li>Perlin noise and cellular automata share a common post-processing pipeline.</li>
+                    <li>
+                        Visual and structural variety is achieved by adjusting a small set of parameters:
+                        <ul>
+                            <li>Noise scale</li>
+                            <li>Obstacle density</li>
+                            <li>Border curvature</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Variations include:
+                        <ul>
+                            <li>Placing multiple Perlin "mountains" side by side</li>
+                            <li>Shifting camera framing to introduce central splits or valleys</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Planned: Urban Procedural Locations</h3>
+                <ul>
+                    <li>
+                        Urban areas are generated by:
+                        <ul>
+                            <li>Creating multiple rectangular rooftop zones</li>
+                            <li>Connecting them with traversable paths</li>
+                        </ul>
+                    </li>
+                    <li>Boolean operations are applied to avoid simple box layouts and produce more complex silhouettes.</li>
+                    <li>The design focuses on rooftop traversal, fitting the cat-centric movement mechanics.</li>
+                </ul>
+
+                <div class="carousel-container">
+                    <div class="carousel" id="carousel5">
+                        <img src="images/leveldesign/image1.png" alt="Procedural Screenshot 1">
+                        <img src="images/leveldesign/image2.png" alt="Procedural Screenshot 2">
+                        <img src="images/leveldesign/image3.png" alt="Procedural Screenshot 3">
+                        <img src="images/leveldesign/image4.png" alt="Procedural Screenshot 4">
+                        <img src="images/leveldesign/image5.png" alt="Procedural Screenshot 5">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel5', -1)">‹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel5', 1)">›</button>
+                    <div class="carousel-dots" id="dots5"></div>
+                </div>
+            </div>
+        </div>
     </main>
+
 
     <script src="layout.js"></script>
     <script src="shader.js"></script>

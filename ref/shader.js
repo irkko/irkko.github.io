@@ -19,13 +19,14 @@ let largeSquares = [];
 
 // Shader parameters (tweakable)
 const FADE_DURATION = 200;
-const MIN_FILL_DURATION = 4000;
+const MIN_FILL_DURATION = 2000;
 const MAX_FILL_DURATION = 5000;
-const MIN_ACTIVE_CELLS = 15;
-const MAX_ACTIVE_CELLS = 25;
+const MIN_ACTIVE_CELLS = 40;
+const MAX_ACTIVE_CELLS = 50;
 const TOP_BG_RATIO = 0.05;      // % background allowed in top rows
-const SQUARE_2x2_CHANCE = 0.35;
-const SQUARE_3x3_CHANCE = 0.15;
+const SQUARE_2x2_CHANCE = 0.3;
+const SQUARE_3x3_CHANCE = 0.2;
+const SQUARE_4x4_CHANCE = 0.1;
 
 // Layout vars from layout.js
 let layoutVars = getLayoutVars();
@@ -141,7 +142,10 @@ function initGrid() {
     gridCols = Math.ceil(canvas.width / cellSize);
     gridRows = Math.ceil(canvas.height / cellSize);
 
-    topZoneRowCount =  layoutVars.headerRows;;
+    topZoneRowCount = layoutVars.headerRows;
+
+    const panelRowCount = 1;
+
     sideColCount = Math.floor(layoutVars.sideWidthPercent * gridCols);
     const centerColCount = Math.floor(layoutVars.centerWidthPercent * gridCols);
     centerStartCol = Math.floor((gridCols - centerColCount) / 2);
@@ -150,11 +154,25 @@ function initGrid() {
     for (let row = 0; row < gridRows; row++) {
         for (let col = 0; col < gridCols; col++) {
             const cell = new Cell(row, col);
+
             // Header fully filled
             if (row < topZoneRowCount) {
                 cell.alpha = 1;
                 cell.targetAlpha = 1;
             }
+
+            // Extra panel row: fill with background color
+            if (row === topZoneRowCount) {
+                cell.alpha = 1; // fully opaque
+                cell.targetAlpha = 1;
+                // Optional: force bg color if needed
+                cell.draw = function () {
+                    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--header-color');
+                    ctx.globalAlpha = 1;
+                    ctx.fillRect(this.x, this.y, cellSize, cellSize);
+                }
+            }
+
             allCells.push(cell);
         }
     }
@@ -195,11 +213,18 @@ function activateRandomElements(count) {
 
         // --- BIG SQUARE CHANCE ---
         const r = Math.random();
-        if (r < SQUARE_3x3_CHANCE) {
+
+        if (r < SQUARE_4x4_CHANCE) {
+            tryCreateBigSquare(4);
+            continue;
+        }
+
+        if (r < SQUARE_4x4_CHANCE + SQUARE_3x3_CHANCE) {
             tryCreateBigSquare(3);
             continue;
         }
-        if (r < SQUARE_3x3_CHANCE + SQUARE_2x2_CHANCE) {
+
+        if (r < SQUARE_4x4_CHANCE + SQUARE_3x3_CHANCE + SQUARE_2x2_CHANCE) {
             tryCreateBigSquare(2);
             continue;
         }
@@ -215,6 +240,7 @@ function activateRandomElements(count) {
         cell.startInversion();
     }
 }
+
 
 
 /* -------------------------------
