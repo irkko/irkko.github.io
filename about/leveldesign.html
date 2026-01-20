@@ -499,9 +499,13 @@
         const MIN_ACTIVE_CELLS = 15;
         const MAX_ACTIVE_CELLS = 20;
 
+        const SIDE_COL_RATIO = 0.10;   // 10% left + 10% right
+        // const SIDE_ROW_RATIO = 0.15;   // 15% top + 15% bottom
+        const CENTER_SAFE_RATIO = 0.85; // 85% text-safe width
+
         const TOP_BG_RATIO = 0.05;     // 5% allowed background in top rows
         const SIDE_FILL_RATIO = 0.10; // 10% allowed filled in side columns
- 
+        const SIDE_ROW_RATIO = 0.1;   // 10% side height
 
         const SQUARE_2x2_CHANCE = 0.35;
         const SQUARE_3x3_CHANCE = 0.15;
@@ -512,6 +516,11 @@
         let gridCols, gridRows;
         let allCells = [];
         let largeSquares = [];
+
+        let sideColCount = 0;
+        // let sideRowCount = 0;
+        let centerStartCol = 0;
+        let centerEndCol = 0;
 
         function updateCellSize() {
             cellSize = window.innerWidth < 768
@@ -750,14 +759,22 @@
             }
         }
 
-
         function isInActiveZone(row, col) {
-            const inTopRows = row < 8;
-            const inLeftCols = col < 8;
-            const inRightCols = col >= gridCols - 9;
+            // --- HEADER (top 8 rows) ---
+            if (row < 8) return true;
 
-            return inTopRows || inLeftCols || inRightCols;
+            // --- SIDE COLUMNS (full height, text-safe center excluded) ---
+            const inSideCols =
+                col < sideColCount ||
+                col >= gridCols - sideColCount;
+
+            const inCenterSafeZone =
+                col >= centerStartCol &&
+                col < centerEndCol;
+
+            return inSideCols && !inCenterSafeZone;
         }
+
 
         function getCellAt(row, col) {
             return allCells.find(c => c.row === row && c.col === col);
@@ -796,6 +813,18 @@
             largeSquares = [];
             gridCols = Math.ceil(canvas.width / cellSize);
             gridRows = Math.ceil(canvas.height / cellSize);
+
+            // vertical limits
+            // sideRowCount = Math.floor(gridRows * SIDE_ROW_RATIO);
+
+            // horizontal limits
+            sideColCount = Math.floor(gridCols * SIDE_COL_RATIO);
+
+            // center safe zone (85%)
+            const centerColCount = Math.floor(gridCols * CENTER_SAFE_RATIO);
+            centerStartCol = Math.floor((gridCols - centerColCount) / 2);
+            centerEndCol = centerStartCol + centerColCount;
+
 
             for (let row = 0; row < gridRows; row++) {
                 for (let col = 0; col < gridCols; col++) {
