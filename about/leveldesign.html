@@ -540,7 +540,7 @@
        // const TOP_BG_RATIO = 0.10;
 
         function topRowsBgRatio() {
-            const topCells = allCells.filter(c => c.row < 8);
+            const topCells = allCells.filter(c => c.row < topZoneRowCount);
             const bgCount = topCells.filter(c => c.alpha === 0).length;
             return bgCount / topCells.length;
         }
@@ -584,9 +584,8 @@
 
                 if (this.isActive && now >= this.fillEndTime && this.alpha === this.targetAlpha) {
 
-                    // prevent top rows from collapsing into bg
                     if (
-                        this.row < 8 &&
+                        this.row < topZoneRowCount &&
                         this.targetAlpha === 1 &&
                         topRowsBgRatio() >= TOP_BG_RATIO
                     ) {
@@ -938,7 +937,7 @@
         }
 
         function enforceTopRowRatio() {
-            const topCells = allCells.filter(c => topZoneRowCount);
+            const topCells = allCells.filter(c => c.row < topZoneRowCount));
             const total = topCells.length;
 
             const bgCells = topCells.filter(c =>
