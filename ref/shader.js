@@ -40,6 +40,44 @@ const SideZone = {
    /* zIndex: 2, // Draw order   */
 };
 
+const SQUARE_SIZES = [
+    { size: 1, weight: 0.45 },
+    { size: 2, weight: 0.35 },
+    { size: 3, weight: 0.15 },
+    { size: 4, weight: 0.05 },
+];
+
+
+function pickSquareSize() {
+    const r = Math.random();
+    let acc = 0;
+    for (const s of SQUARE_SIZES) {
+        acc += s.weight;
+        if (r <= acc) return s.size;
+    }
+    return 1;
+}
+
+
+function getSquareCells(anchor, size) {
+    const cells = [];
+
+    for (let dy = 0; dy < size; dy++) {
+        for (let dx = 0; dx < size; dx++) {
+            const row = anchor.row + dy;
+            const col = anchor.col + dx;
+
+            if (row < 0 || row >= gridRows) continue;
+            if (col < 0 || col >= gridCols) continue;
+
+            const cell = allCells[row * gridCols + col];
+            if (cell) cells.push(cell);
+        }
+    }
+    return cells;
+}
+
+
 /* -------------------------------
    Cell
 ---------------------------------*/
@@ -55,16 +93,34 @@ class Cell {
         this.isActive = false;
         this.fadeStartTime = 0;
         this.fillEndTime = 0;
+
+
     }
 
-    startInversion() {
-        if (!this.zone) return;
-        this.isActive = true;
-        this.targetColorMix = 1;
-        this.fadeStartTime = Date.now();
-        const duration = this.zone.minFill + Math.random() * (this.zone.maxFill - this.zone.minFill);
-        this.fillEndTime = this.fadeStartTime + this.zone.fadeDuration + duration;
-    }
+
+
+startInversion() {
+    if (!this.isRoot) return;
+
+    this.isActive = true;
+    this.targetColorMix = 1;
+    this.fadeStartTime = Date.now();
+
+    const startTime = this.fadeStartTime;
+
+    const duration =
+        this.zone.minFill +
+        Math.random() * (this.zone.maxFill - this.zone.minFill);
+
+    const size = this.size || 1; // fallback safety
+
+    // ⬇️ PASTE STARTS HERE
+    const sizeFactor = 1 + size * 0.15;
+    this.fillEndTime =
+        startTime + this.zone.fadeDuration + duration * sizeFactor;
+    // ⬆️ PASTE ENDS HERE
+}
+
 
     update() {
         if (!this.zone || !this.isActive) return;
@@ -215,12 +271,39 @@ function initGrid() {
 ---------------------------------*/
 function activateZone(zone, count) {
     const candidates = zone.cells.filter(c => !c.isActive);
-    for (let i = 0; i < count && candidates.length > 0; i++) {
+
+    let spawned = 0;
+
+    while (spawned < count && candidates.length > 0) {
         const index = Math.floor(Math.random() * candidates.length);
-        const cell = candidates.splice(index, 1)[0];
-        cell.startInversion();
+        const anchor = candidates.splice(index, 1)[0];
+
+        if (anchor.isActive) continue;
+
+        const size = pickSquareSize();
+        const square = getSquareCells(anchor, size);
+
+        // Allow spawn if AT LEAST ONE cell is in the zone
+        if (!square.some(c => c.zone === zone)) continue;
+
+        const startTime = Date.now();
+        const duration =
+            zone.minFill + Math.random() * (zone.maxFill - zone.minFill);
+
+        square.forEach(cell => {
+            //  FORCE zone inheritance so it renders
+            cell.zone = zone;
+
+            cell.isActive = true;
+            cell.targetColorMix = 1;
+            cell.fadeStartTime = startTime;
+            cell.fillEndTime = startTime + zone.fadeDuration + duration;
+        });
+
+        spawned++;
     }
 }
+
 
 /* -------------------------------
    Draw & Animate
@@ -233,9 +316,7 @@ function drawGrid() {
     
     // Draw by z-index order
     const zones = [HeaderZone, SideZone].sort((a, b) => a.zIndex - b.zIndex);
-    zones.forEach(zone => {
-        zone.cells.forEach(c => c.draw());
-    });
+    allCells.forEach(c => c.draw());
     
     maintainZoneDensity(HeaderZone);
     maintainZoneDensity(SideZone);
