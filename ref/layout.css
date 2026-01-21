@@ -19,17 +19,16 @@ body {
 
 /*    dark purple  #301934;     purple  #392A48;        light lilac  #fff0f5;     white   #ffffff;         */
 :root {
-    --bg-color: #392A48;
-    --header-color: #301934;
+    --bg-color: #392A48; /*content background*/
+    --header-color: #ffffff;
     --text-color: #fff0f5;
-    --header-cell-color: #301934; /*fill color*/
-    --header-extra: #392A48; /*cells color*/
+    --header-cell-color: #000000; /*fill color*/
+    --header-extra: #301934; /*cells color*/
     --sides-cell-color: trasnparent;
-    --sides-extra: #301934;
+    --sides-extra: #000000;
     /* Content-specific variables (independent of shader) */
     --content-max-width: 1200px;
     --content-padding: 2rem;
-
 }
 
 
@@ -98,7 +97,7 @@ header#header {
     position: fixed;
     top: 0;
     height: 100vh;
-    background: transparent;
+    /*background: transparent;*/
    
 }
 
@@ -136,6 +135,7 @@ main#content {
         font-size: clamp(1.2rem, 3vw, 2rem);
         margin-bottom: 2rem;
         line-height: 1.6;
+        color: #000000;
     }
 
     .project h3 {
