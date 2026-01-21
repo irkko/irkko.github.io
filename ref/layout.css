@@ -10,16 +10,16 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #341539;
-    color: #fff;
+    background: #392A48;
+    color: #fff0f5;
     overflow-x: hidden;
 }
 
 :root {
     --bg-color: #ffffff;
-    --header-color: #000000;
-    --text-color: #ffffff;
-    --cell-fill-color: #ffffff;
+    --header-color: #301934;
+    --text-color: fff0f5;
+    --cell-fill-color: #000000;
     --accent-color: #ffffff;
 }
 
