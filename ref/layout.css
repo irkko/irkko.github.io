@@ -15,13 +15,24 @@ body {
     overflow-x: hidden;
 }
 
+
+
+/*    dark purple  #301934;     purple  #392A48;        light lilac  #fff0f5;     white   #ffffff;         */
 :root {
-    --bg-color: #ffffff;
+    --bg-color: #392A48;
     --header-color: #301934;
-    --text-color: fff0f5;
-    --cell-fill-color: #000000;
-    --accent-color: #ffffff;
+    --text-color: #fff0f5;
+    --header-cell-color: #301934; /*fill color*/
+    --header-extra: #392A48; /*cells color*/
+    --sides-cell-color: trasnparent;
+    --sides-extra: #301934;
+    /* Content-specific variables (independent of shader) */
+    --content-max-width: 1200px;
+    --content-padding: 2rem;
+
 }
+
+
 
 /* Canvas for shader overlay */
 #shaderCanvas {
@@ -30,13 +41,10 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 50;
+    z-index: 60;
     pointer-events: none;
-    mix-blend-mode:  overlay;
+    mix-blend-mode: normal;
 }
-
-
-
 
 /* Header */
 header#header {
@@ -44,41 +52,36 @@ header#header {
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--header-height);
-    z-index: 10;
+    height: calc(var(--header-height) - 1);
+    z-index: 70;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--header-color);
+    background: transparent;
     color: var(--text-color);
-    /*border-bottom: 2px solid var(--cell-fill-color); */
-    text-align: center; /* ensures inline text centers too */
-
-    font-family: 'Press Start 2P', monospace; /* pixel font for main header text */
-    font-size: clamp(12px, 2vw, 24px); /* responsive pixelated look */
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(12px, 2vw, 24px);
     letter-spacing: 5px;
-    /* text-transform: uppercase;*/
     -webkit-font-smoothing: none;
-    /*-moz-osx-font-smoothing: grayscale;*/
 }
 
 #links-panel {
-    position: fixed; /* anchor to viewport */
-    top: calc(var(--cell-size) * (var(--header-rows)) - (var(--cell-size))); /* center panel on extra row */
-    left: 50%; /* center horizontally */
+    position: fixed;
+    top: calc(var(--cell-size) * (var(--header-rows)) - (var(--cell-size)));
+    left: 50%;
     transform: translateX(-50%);
     display: flex;
+    color: var(--header-cell-color);
     justify-content: center;
-    gap: 1rem; /* spacing between links */
-    z-index: 15; /* above shader and header */
+    gap: 1rem;
+    z-index: 80;   /*10+ z of header*/
 }
 
-
-
-
     #links-panel a {
-        font-family: 'Inter', sans-serif; /* modern sans font for links */
+        font-family: 'Inter', sans-serif;
         font-weight: 500;
         font-size: 0.9rem;
         color: var(--text-color);
@@ -90,17 +93,15 @@ header#header {
             text-decoration: underline;
         }
 
-
-/* Side panels (for reference and safe zones) */
+/* Side panels (for shader reference only) */
 .side {
     position: fixed;
     top: 0;
     height: 100vh;
     background: transparent;
-    z-index: 40;
+   
 }
 
-    /* Left and right sides */
     .side.left {
         left: 0;
     }
@@ -109,19 +110,25 @@ header#header {
         right: 0;
     }
 
-/* Main content area */
+
+
+/* Main content area - independent responsive layout */
 main#content {
     position: relative;
-    z-index: 1;
-    padding: 4rem 2rem;
-    margin-top: var(--header-height, 15vh); /* fallback 15% of viewport */
-    max-width: 1200px;
-    margin-left: 10vh;
-    margin-right: 10vh;
+    /*top: calc(var(--cell-size) * (var(--header-rows)) + (var(--cell-size))); */
+    z-index: 40;
+    margin-top: var(--header-height, 108px);
+    padding: 4rem var(--content-padding);
+    max-width: var(--content-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--bg-color);
 }
 
+/* Project sections */
 .project {
     margin-bottom: 6rem;
+    z-index: 30;
 }
 
     .project h2 {
@@ -173,12 +180,109 @@ main#content {
         margin-bottom: 0;
     }
 
+/* Carousel styling */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    margin: 2rem 0;
+    overflow: hidden;
+}
 
+.carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
 
+    .carousel img {
+        width: 100%;
+        height: auto;
+        flex-shrink: 0;
+        object-fit: cover;
+        display: block;
+    }
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+}
+
+    .carousel-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .carousel-btn.prev {
+        left: 10px;
+    }
+
+    .carousel-btn.next {
+        right: 10px;
+    }
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .carousel-dot.active {
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+/* Modular content layout - side-by-side on landscape */
+.content-module {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+/* Tablet and up - landscape orientation */
+@media (min-width: 768px) and (orientation: landscape) {
+    .content-module {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+        .content-module.text-heavy {
+            grid-template-columns: 1.5fr 1fr;
+        }
+
+        .content-module.image-heavy {
+            grid-template-columns: 1fr 1.5fr;
+        }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+    :root {
+        --content-padding: 4rem;
+    }
+}
+
+/* Tablet */
 @media (max-width: 1000px) {
-    .content {
+    main#content {
         padding: 2rem 1rem;
-        z-index: 5;
     }
 
     .project {
@@ -192,19 +296,44 @@ main#content {
     }
 }
 
-/* Orientation-specific layouts */
-@media (orientation: portrait) {
+/* Mobile */
+@media (max-width: 600px) {
     :root {
-        /* --header-height: 120px; /* header height as % of viewport _______while i need 120px if cellSize = 24     */
-        --side-width-percent: 0.15; /* 15% sides */
-        --center-width-percent: 0.8; /* center safe zone */
+        --content-padding: 1rem;
+    }
+
+    main#content {
+        padding: 2rem 1rem;
+    }
+
+    .project h2 {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .project h3 {
+        font-size: 1.2rem;
+    }
+
+    .carousel-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+
+    .project ul {
+        margin-left: 1rem;
     }
 }
 
-@media (orientation: landscape) {
-    :root {
-        /*--header-height: 120px;*/ 
-        --side-width-percent: 0.05; /* slightly smaller sides */
-        --center-width-percent: 0.9;
+/* Portrait-specific adjustments */
+@media (orientation: portrait) {
+    .carousel-container {
+        margin: 1.5rem 0;
+    }
+
+    /* Stack everything vertically in portrait */
+    .content-module {
+        grid-template-columns: 1fr;
     }
 }

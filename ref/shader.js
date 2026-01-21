@@ -1,252 +1,251 @@
 ﻿/* -------------------------------
-   Shader for header & sides
+   Shader: Header + Sides (Color Blinking)
 ---------------------------------*/
 
 const canvas = document.getElementById('shaderCanvas');
 const ctx = canvas.getContext('2d');
 
-// let cellSize = 24;
-
-let cellSize = window.layout.cellSize; // always 24
-
-
-
+let cellSize = window.layout.cellSize;
 let gridCols, gridRows;
 let allCells = [];
-let largeSquares = [];
-
-// Shader parameters (tweakable)
-const FADE_DURATION = 200;
-const MIN_FILL_DURATION = 2000;
-const MAX_FILL_DURATION = 5000;
-const MIN_ACTIVE_CELLS = 40;
-const MAX_ACTIVE_CELLS = 50;
-const TOP_BG_RATIO = 0.05;      // % background allowed in top rows
-const SQUARE_2x2_CHANCE = 0.3;
-const SQUARE_3x3_CHANCE = 0.2;
-const SQUARE_4x4_CHANCE = 0.1;
-
-// Layout vars from layout.js
-let layoutVars = getLayoutVars();
-let topZoneRowCount = 0;
-let sideColCount = 0;
-let centerStartCol = 0;
-let centerEndCol = 0;
 
 /* -------------------------------
-   Cell Class
+   Layout
+---------------------------------*/
+let layoutVars = getLayoutVars();
+let sideColCount = 0;
+
+/* -------------------------------
+   Zone Definitions
+---------------------------------*/
+const HeaderZone = {
+    name: 'header',
+    fadeDuration: 1600,
+    minFill: 2000,
+    maxFill: 5000,
+    activeRatio: 0.10,
+    color1Var: '--header-cell-color',
+    color2Var: '--header-extra',
+    /*zIndex: 1, // Draw order */
+};
+
+const SideZone = {
+    name: 'side',
+    fadeDuration: 1600,
+    minFill: 500,
+    maxFill: 1500,
+    activeRatio: 0.10,
+    color1Var: '--sides-cell-color',
+    color2Var: '--sides-extra',
+   /* zIndex: 2, // Draw order   */
+};
+
+/* -------------------------------
+   Cell
 ---------------------------------*/
 class Cell {
-    constructor(row, col) {
+    constructor(row, col, zone) {
         this.row = row;
         this.col = col;
+        this.zone = zone;
         this.x = col * cellSize;
         this.y = row * cellSize;
-        this.alpha = 0;
-        this.targetAlpha = 0;
+        this.colorMix = 0; // 0 = color1, 1 = color2
+        this.targetColorMix = 0;
         this.isActive = false;
         this.fadeStartTime = 0;
         this.fillEndTime = 0;
     }
 
     startInversion() {
+        if (!this.zone) return;
         this.isActive = true;
-        this.targetAlpha = this.alpha > 0.5 ? 0 : 1;
+        this.targetColorMix = 1;
         this.fadeStartTime = Date.now();
-        const duration = MIN_FILL_DURATION + Math.random() * (MAX_FILL_DURATION - MIN_FILL_DURATION);
-        this.fillEndTime = this.fadeStartTime + FADE_DURATION + duration;
+        const duration = this.zone.minFill + Math.random() * (this.zone.maxFill - this.zone.minFill);
+        this.fillEndTime = this.fadeStartTime + this.zone.fadeDuration + duration;
     }
 
     update() {
+        if (!this.zone || !this.isActive) return;
+        
         const now = Date.now();
-        if (this.targetAlpha === 1 && this.alpha < 1) {
-            this.alpha = Math.min(1, (now - this.fadeStartTime) / FADE_DURATION);
+        const fade = this.zone.fadeDuration;
+
+        // Fade to color2
+        if (this.targetColorMix === 1 && this.colorMix < 1) {
+            const elapsed = now - this.fadeStartTime;
+            this.colorMix = Math.min(elapsed / fade, 1);
         }
-        if (this.isActive && now >= this.fillEndTime && this.alpha === this.targetAlpha) {
-            this.targetAlpha = this.targetAlpha === 1 ? 0 : 1;
+
+        // Hold at color2, then switch target
+        if (this.colorMix === 1 && now >= this.fillEndTime && this.targetColorMix === 1) {
+            this.targetColorMix = 0;
             this.fadeStartTime = now;
         }
-        if (this.targetAlpha === 0 && this.alpha > 0) {
-            this.alpha = Math.max(0, 1 - (now - this.fadeStartTime) / FADE_DURATION);
-            if (this.alpha === 0) this.isActive = false;
+
+        // Fade back to color1
+        if (this.targetColorMix === 0 && this.colorMix > 0) {
+            const elapsed = now - this.fadeStartTime;
+            this.colorMix = Math.max(1 - elapsed / fade, 0);
+            
+            // Deactivate when back to color1
+            if (this.colorMix === 0) {
+                this.isActive = false;
+            }
         }
     }
 
     draw() {
-        if (this.alpha > 0) {
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--cell-fill-color');
-            ctx.globalAlpha = this.alpha;
-            ctx.fillRect(this.x, this.y, cellSize, cellSize);
-            ctx.globalAlpha = 1;
-        }
+        if (!this.zone) return;
+
+        const root = getComputedStyle(document.documentElement);
+
+        const raw1 = root.getPropertyValue(this.zone.color1Var).trim();
+        const raw2 = root.getPropertyValue(this.zone.color2Var).trim();
+
+        // Parse colors (fallback = transparent)
+        const c1 = parseColor(raw1) || { r: 0, g: 0, b: 0, a: 0 };
+        const c2 = parseColor(raw2) || { r: 0, g: 0, b: 0, a: 0 };
+
+        const t = this.colorMix; // 0 → color1, 1 → color2
+
+        const r = Math.round(c1.r + (c2.r - c1.r) * t);
+        const g = Math.round(c1.g + (c2.g - c1.g) * t);
+        const b = Math.round(c1.b + (c2.b - c1.b) * t);
+        const a = c1.a + (c2.a - c1.a) * t;
+
+        // Skip fully transparent draw
+        if (a <= 0.001) return;
+
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
+        ctx.fillRect(this.x, this.y, cellSize, cellSize);
     }
+
 }
-
-
-class BigSquare {
-    constructor(cells) {
-        this.cells = cells;
-        this.leader = cells[0];
-    }
-
-    startInversion() {
-        this.leader.startInversion();
-    }
-
-    update() {
-        const alpha = this.leader.alpha;
-        this.cells.forEach(c => {
-            c.alpha = alpha;
-            c.targetAlpha = this.leader.targetAlpha;
-            c.isActive = this.leader.isActive;
-        });
-    }
-
-    draw() {
-        this.cells.forEach(c => c.draw());
-    }
-}
-
-
-
 
 /* -------------------------------
-   Layout-dependent helpers
+   Color Utilities
 ---------------------------------*/
-function isInActiveZone(row, col) {
-    // 1. Header rows: everything is active
-    if (row < layoutVars.headerRows) {
-        return true;
+function parseColor(color) {
+    if (!color || color === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
+    
+    // Hex color
+    if (color.startsWith('#')) {
+        let hex = color.replace('#', '');
+        if (hex.length === 3) {
+            hex = hex.split('').map(c => c + c).join('');
+        }
+        const num = parseInt(hex, 16);
+        return {
+            r: (num >> 16) & 255,
+            g: (num >> 8) & 255,
+            b: num & 255,
+            a: 1
+        };
     }
-
-    // 2. Below header: only side columns are active
-    const inLeftSide = col < sideColCount;
-    const inRightSide = col >= gridCols - sideColCount;
-
-    return inLeftSide || inRightSide;
-}
-
-function getCellAt(row, col) {
-    if (row < 0 || col < 0 || row >= gridRows || col >= gridCols) return null;
-    return allCells[row * gridCols + col];
+    
+    // RGB/RGBA
+    const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+    if (match) {
+        return {
+            r: parseInt(match[1]),
+            g: parseInt(match[2]),
+            b: parseInt(match[3]),
+            a: match[4] ? parseFloat(match[4]) : 1
+        };
+    }
+    
+    return null;
 }
 
 /* -------------------------------
-   Grid Init & Activation
+   Zone Assignment
+---------------------------------*/
+function getZoneForCell(row, col) {
+    if (row < layoutVars.headerRows) {
+        return HeaderZone;
+    }
+    const inLeft = col < sideColCount;
+    const inRight = col >= gridCols - sideColCount;
+    if (inLeft || inRight) {
+        return SideZone;
+    }
+    return null;
+}
+
+/* -------------------------------
+   Grid Init
 ---------------------------------*/
 function initGrid() {
     allCells = [];
-    largeSquares = [];
     gridCols = Math.ceil(canvas.width / cellSize);
     gridRows = Math.ceil(canvas.height / cellSize);
 
-    topZoneRowCount = layoutVars.headerRows;
-
-    const panelRowCount = 1;
-
     sideColCount = Math.floor(layoutVars.sideWidthPercent * gridCols);
-    const centerColCount = Math.floor(layoutVars.centerWidthPercent * gridCols);
-    centerStartCol = Math.floor((gridCols - centerColCount) / 2);
-    centerEndCol = centerStartCol + centerColCount;
 
     for (let row = 0; row < gridRows; row++) {
         for (let col = 0; col < gridCols; col++) {
-            const cell = new Cell(row, col);
+            const zone = getZoneForCell(row, col);
+            const cell = new Cell(row, col, zone);
 
-            // Header fully filled
-            if (row <= topZoneRowCount) {
-                cell.alpha = 1;
-                cell.targetAlpha = 1;
+            // Header cells start at color1, NOT active
+            if (zone === HeaderZone) {
+                cell.colorMix = 0;
+                cell.targetColorMix = 0;
+                cell.isActive = false;
             }
-
-
-
 
             allCells.push(cell);
         }
     }
 
-    activateRandomElements(MIN_ACTIVE_CELLS);
+    HeaderZone.cells = allCells.filter(c => c.zone === HeaderZone);
+    SideZone.cells = allCells.filter(c => c.zone === SideZone);
+
+    HeaderZone.targetActive = Math.floor(HeaderZone.cells.length * HeaderZone.activeRatio);
+    SideZone.targetActive = Math.floor(SideZone.cells.length * SideZone.activeRatio);
+
+    maintainZoneDensity(HeaderZone);
+    maintainZoneDensity(SideZone);
 }
 
-function tryCreateBigSquare(size) {
-    // pick a random cell as anchor
-    const anchor = allCells[Math.floor(Math.random() * allCells.length)];
-    if (!isInActiveZone(anchor.row, anchor.col)) return;
-
-    const cells = [];
-
-    for (let dy = 0; dy < size; dy++) {
-        for (let dx = 0; dx < size; dx++) {
-            const c = getCellAt(anchor.row + dy, anchor.col + dx);
-            if (c) cells.push(c);
-        }
-    }
-
-    // Require at least ONE cell in active zone
-    const hasValidCell = cells.some(c => isInActiveZone(c.row, c.col));
-    if (!hasValidCell) return;
-
-    // Prevent overlap with active cells
-    if (cells.some(c => c.isActive)) return;
-
-    const square = new BigSquare(cells);
-    largeSquares.push(square);
-    square.startInversion();
-}
-
-
-
-function activateRandomElements(count) {
-    for (let i = 0; i < count; i++) {
-
-        // --- BIG SQUARE CHANCE ---
-        const r = Math.random();
-
-        if (r < SQUARE_4x4_CHANCE) {
-            tryCreateBigSquare(4);
-            continue;
-        }
-
-        if (r < SQUARE_4x4_CHANCE + SQUARE_3x3_CHANCE) {
-            tryCreateBigSquare(3);
-            continue;
-        }
-
-        if (r < SQUARE_4x4_CHANCE + SQUARE_3x3_CHANCE + SQUARE_2x2_CHANCE) {
-            tryCreateBigSquare(2);
-            continue;
-        }
-        // ------------------------
-
-        const inactive = allCells.filter(
-            c => isInActiveZone(c.row, c.col) && !c.isActive
-        );
-
-        if (inactive.length === 0) return;
-
-        const cell = inactive[Math.floor(Math.random() * inactive.length)];
+/* -------------------------------
+   Activation
+---------------------------------*/
+function activateZone(zone, count) {
+    const candidates = zone.cells.filter(c => !c.isActive);
+    for (let i = 0; i < count && candidates.length > 0; i++) {
+        const index = Math.floor(Math.random() * candidates.length);
+        const cell = candidates.splice(index, 1)[0];
         cell.startInversion();
     }
 }
-
-
 
 /* -------------------------------
    Draw & Animate
 ---------------------------------*/
 function drawGrid() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Update all cells
     allCells.forEach(c => c.update());
-    largeSquares.forEach(sq => sq.update());
+    
+    // Draw by z-index order
+    const zones = [HeaderZone, SideZone].sort((a, b) => a.zIndex - b.zIndex);
+    zones.forEach(zone => {
+        zone.cells.forEach(c => c.draw());
+    });
+    
+    maintainZoneDensity(HeaderZone);
+    maintainZoneDensity(SideZone);
+}
 
-    allCells.forEach(c => c.draw());
-    largeSquares.forEach(sq => sq.draw());
-
-    // maintain min active cells
-    const activeCount = allCells.filter(c => c.isActive).length;
-    if (activeCount < MIN_ACTIVE_CELLS) {
-        activateRandomElements(MIN_ACTIVE_CELLS - activeCount);
+function maintainZoneDensity(zone) {
+    const active = zone.cells.filter(c => c.isActive).length;
+    const deficit = zone.targetActive - active;
+    if (deficit > 0) {
+        activateZone(zone, deficit);
     }
 }
 
@@ -256,17 +255,15 @@ function animate() {
 }
 
 /* -------------------------------
-   Canvas Resizing
+   Resize
 ---------------------------------*/
 function resizeCanvas() {
     layoutVars = getLayoutVars();
-    /*cellSize = getCellSize(); // THIS LINE IS CRITICAL*/
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     initGrid();
 }
+
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 animate();

@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>Irko Kekman - Procedural Rulesmith</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-
     <header id="header">
         <div class="header-content">
-            <h1>Irina "Irko" Kekman</h1>
+            <h1>Irko Kekman</h1>
             <p>PROCEDURAL RULESMITH</p>
         </div>
     </header>
 
-    <!-- Move links-panel outside header -->
     <div id="links-panel">
         <a href="/portfolio1">Portfolio 1</a>
         <a href="/portfolio2">Portfolio 2</a>
@@ -27,10 +25,9 @@
     <aside class="side right"></aside>
 
     <main id="content">
-
         <div class="content">
             <div class="project">
-                <h2>Level Design & Controlled Randomization – Willow Guard</h2>
+                <h2>Level Design & Controlled Randomization â€“ Willow Guard</h2>
 
                 <h3>Static Level Design</h3>
                 <ul>
@@ -47,8 +44,8 @@
                         <img src="images/leveldesign/image4.png" alt="Willow Guard Screenshot 4">
                         <img src="images/leveldesign/image5.png" alt="Willow Guard Screenshot 5">
                     </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
-                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">â€¹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">â€º</button>
                     <div class="carousel-dots" id="dots1"></div>
                 </div>
 
@@ -79,8 +76,8 @@
                         <img src="images/leveldesign/image4.png" alt="Fields Zone Screenshot 4">
                         <img src="images/leveldesign/image5.png" alt="Fields Zone Screenshot 5">
                     </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel('carousel2', -1)">‹</button>
-                    <button class="carousel-btn next" onclick="moveCarousel('carousel2', 1)">›</button>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel2', -1)">â€¹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel2', 1)">â€º</button>
                     <div class="carousel-dots" id="dots2"></div>
                 </div>
 
@@ -110,7 +107,7 @@
             </div>
 
             <div class="project">
-                <h2>Procedural World & Level Generation – Caverns & Catlings</h2>
+                <h2>Procedural World & Level Generation â€“ Caverns & Catlings</h2>
 
                 <h3>World Structure</h3>
                 <ul>
@@ -128,17 +125,17 @@
                         <img src="images/leveldesign/image4.png" alt="Caverns Screenshot 4">
                         <img src="images/leveldesign/image5.png" alt="Caverns Screenshot 5">
                     </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel('carousel3', -1)">‹</button>
-                    <button class="carousel-btn next" onclick="moveCarousel('carousel3', 1)">›</button>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel3', -1)">â€¹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel3', 1)">â€º</button>
                     <div class="carousel-dots" id="dots3"></div>
                 </div>
 
-                <h3>Arena-Like Procedural Locations (Perlin Noise–Based)</h3>
+                <h3>Arena-Like Procedural Locations (Perlin Noiseâ€“Based)</h3>
 
                 <p><strong>Base Generation</strong></p>
                 <ul>
                     <li>Levels are generated inside fixed square boundaries.</li>
-                    <li>2–3 Perlin noise "blobs" are generated and layered on top of each other to define walkable elevation.</li>
+                    <li>2â€“3 Perlin noise "blobs" are generated and layered on top of each other to define walkable elevation.</li>
                     <li>
                         Noise thresholds control:
                         <ul>
@@ -206,8 +203,8 @@
                         <img src="images/leveldesign/image4.png" alt="Arena Screenshot 4">
                         <img src="images/leveldesign/image5.png" alt="Arena Screenshot 5">
                     </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel('carousel4', -1)">‹</button>
-                    <button class="carousel-btn next" onclick="moveCarousel('carousel4', 1)">›</button>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel4', -1)">â€¹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel4', 1)">â€º</button>
                     <div class="carousel-dots" id="dots4"></div>
                 </div>
 
@@ -274,17 +271,16 @@
                         <img src="images/leveldesign/image4.png" alt="Procedural Screenshot 4">
                         <img src="images/leveldesign/image5.png" alt="Procedural Screenshot 5">
                     </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel('carousel5', -1)">‹</button>
-                    <button class="carousel-btn next" onclick="moveCarousel('carousel5', 1)">›</button>
+                    <button class="carousel-btn prev" onclick="moveCarousel('carousel5', -1)">â€¹</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('carousel5', 1)">â€º</button>
                     <div class="carousel-dots" id="dots5"></div>
                 </div>
             </div>
         </div>
     </main>
 
-
     <script src="layout.js"></script>
     <script src="shader.js"></script>
-    <script src="carousel.js"></script> <!-- optional -->
+    <script src="carousel.js"></script>
 </body>
 </html>
