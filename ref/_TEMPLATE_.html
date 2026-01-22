@@ -29,12 +29,94 @@
     <main id="content">
         <div class="content">
             <div class="project">
-                <h2>Level Design & Controlled Randomization – Willow Guard</h2>
+                <div class="project-panel">
+                    <h2>Project Title</h2>
+                </div>
+                <div class="project-block layout-vertical">
+                    <h3>Container with vertical layout</h3>
+                    <div class="project-block-content">
+                        <div class="project-block-layout">
+                            <div class="project-text">
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                            </div>
+                            <div class="project-media">
+                                <div class="carousel-container">
 
-                <!-- Page-specific content goes here -->
+
+                                    <div class="carousel" id="carousel1">
+                                        <img src="images/image1.png" alt="Willow Guard Screenshot 1">
+                                        <img src="images/image2.png" alt="Willow Guard Screenshot 2">
+                                        <img src="images/image3.png" alt="Willow Guard Screenshot 3">
+                                        <img src="images/image4.png" alt="Willow Guard Screenshot 4">
+                                        <img src="images/image5.png" alt="Willow Guard Screenshot 5">
+                                    </div>
+                                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                                    <div class="carousel-dots" id="dots1"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="project-panel">
+                    <h2>2nd Project Title</h2>
+                </div>
+
+                <div class="project-block layout-split">
+                    <h3>Container with split layout</h3>
+                    <div class="project-block-content">
+                        <div class="project-block-layout">
+                            <div class="project-text">
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                            </div>
+                            <div class="project-media">
+                                <div class="carousel-container">
+
+
+                                    <div class="carousel" id="carousel1">
+                                        <img src="images/image1.png" alt="Willow Guard Screenshot 1">
+                                        <img src="images/image2.png" alt="Willow Guard Screenshot 2">
+                                        <img src="images/image3.png" alt="Willow Guard Screenshot 3">
+                                        <img src="images/image4.png" alt="Willow Guard Screenshot 4">
+                                        <img src="images/image5.png" alt="Willow Guard Screenshot 5">
+                                    </div>
+                                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                                    <div class="carousel-dots" id="dots1"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
             </div>
-        </div>
-
     </main>
 
     <script src="layout.js"></script>

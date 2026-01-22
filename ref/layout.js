@@ -54,3 +54,9 @@ function resizeLayout() {
 
 window.addEventListener('resize', resizeLayout);
 resizeLayout();
+
+    document.querySelectorAll(".project-block h3").forEach(h3 => {
+    h3.addEventListener("click", () => {
+        h3.parentElement.classList.toggle("open");
+    });
+});
