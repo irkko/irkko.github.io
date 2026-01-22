@@ -76,7 +76,8 @@ header#header {
     color: var(--header-cell-color);
     justify-content: center;
     gap: 1rem;
-    z-index: 80;   /*10+ z of header*/
+    z-index: 80; /*10+ z of header*/
+  
 }
 
     #links-panel a {
@@ -91,6 +92,9 @@ header#header {
         #links-panel a:hover {
             text-decoration: underline;
         }
+
+
+
 
 /* Side panels (for shader reference only) */
 .side {
@@ -204,8 +208,7 @@ main#content {
 }
 
     .project-panel h2 {
-        position: sticky;
-        top: calc(var(--header-height) + 2*(var(--cell-size)));
+
         max-width: var(--content-inner-width);
         margin: 0 auto;
         padding: 0 var(--content-padding);
@@ -216,11 +219,10 @@ main#content {
 
 
 
-
 /* Project sub-containers */
 .project-block {
-    margin: 3rem 0; 
-    border: dashed;   /*for debugging*/
+    margin: 3rem 0;
+    /*border: dashed;   /*for debugging*/ */
 }
 
     .project-block h3 {
@@ -244,7 +246,7 @@ main#content {
     grid-template-rows: 1fr;
 }
 
-}
+
 
 .project-block-layout {
     display: grid;
