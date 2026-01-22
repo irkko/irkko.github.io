@@ -364,3 +364,12 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 animate();
+
+console.log(
+    'gridCols:',
+    gridCols,
+    'sideWidthPercent:',
+    layoutVars.sideWidthPercent,
+    'computed sideColCount:',
+    Math.floor(layoutVars.sideWidthPercent * gridCols)
+);

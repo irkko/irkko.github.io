@@ -19,15 +19,17 @@ body {
 
 
 
-/*    dark purple  #301934;     purple  #392A48;        light lilac  #fff0f5;     white   #ffffff;         */
+/*    dark purple  #301934;     purple  #392A48;        light lilac  #fff0f5;     greish lilac  #B6B5D8;      white   #ffffff;         */
 :root {
-    --bg-color: #392A48; /*content background*/
+    --bg-color: transparent; /*content background*/
     --header-color: #ffffff;
     --text-color: #fff0f5;
     --header-cell-color: #000000; /*fill color*/
     --header-extra: #301934; /*cells color*/
     --sides-cell-color: trasnparent;
     --sides-extra: #000000;
+    --bg-cell-color: transparent;
+    --bg-extra: #3d2d4e;
     /* Content-specific variables (independent of shader) */
     --content-max-width: 1200px;
     --content-padding: 2rem;
@@ -43,6 +45,20 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: 60;
+    pointer-events: none;
+    mix-blend-mode: normal;
+}
+
+
+
+/* Canvas for shader overlay */
+#sideCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index:25;
     pointer-events: none;
     mix-blend-mode: normal;
 }
@@ -160,7 +176,7 @@ aside.side.right {
 main#content {
     position: relative;
     /*top: calc(var(--cell-size) * (var(--header-rows)) + (var(--cell-size))); */
-    z-index: 40;
+    z-index: 30;
     margin-top: var(--header-height, 108px);
     padding: 4rem var(--content-padding);
     max-width: var(--content-main-width);
@@ -186,6 +202,7 @@ main#content {
         line-height: 1.6;
         color: #000000;
         text-align: center;
+        color: #B6B5D8;
     }
 
 
@@ -195,6 +212,7 @@ main#content {
         margin-top: 2.5rem;
         margin-bottom: 1rem;
         font-weight: 600;
+        color: #B6B5D8;
     }
 
     /*subheader in containters*/
@@ -203,6 +221,7 @@ main#content {
         margin-top: 2.5rem;
         margin-bottom: 1rem;
         font-weight: 600;
+        color: #B6B5D8;
     }
 
     .project p,
@@ -285,6 +304,7 @@ main#content {
         font-weight: 600;
         margin-bottom: 1rem;
         cursor: pointer; /* signals interactivity */
+        color: #B6B5D8;
     }
 
 .project-block-content {
