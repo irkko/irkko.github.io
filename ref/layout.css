@@ -2,6 +2,8 @@
    Base Layout & Typography
 ---------------------------------*/
 
+
+
 * {
     margin: 0;
     padding: 0;
@@ -50,10 +52,9 @@ header#header {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: var(--header-height);
     z-index: 70;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -70,8 +71,7 @@ header#header {
 #links-panel {
     position: fixed;
     top: calc(var(--cell-size) * (var(--header-rows)) - (var(--cell-size)));
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100vw;
     display: flex;
     color: var(--header-cell-color);
     justify-content: center;
@@ -146,6 +146,14 @@ header#header {
         right: 0;
     }
 
+/* -----------------------------
+   Apply the widths to layout
+------------------------------- */
+aside.side.left,
+aside.side.right {
+    width: var(--shader-side-width);
+}
+
 
 
 /* Main content area - independent responsive layout */
@@ -155,7 +163,7 @@ main#content {
     z-index: 40;
     margin-top: var(--header-height, 108px);
     padding: 4rem var(--content-padding);
-    max-width: var(--content-max-width);
+    max-width: var(--content-main-width);
     margin-left: auto;
     margin-right: auto;
     background: var(--bg-color);
@@ -168,11 +176,12 @@ main#content {
     z-index: 30;
 }
 
+    /*Big header with white bg*/
     .project h2 {
         position: sticky;
         top: calc(var(--header-height) + 2*(var(--cell-size)));
         font-family: 'Press Start 2P', monospace;
-        font-size: clamp(1.2rem, 3vw, 2rem);
+        font-size: clamp(1rem, 3vw, 1.6rem);
         margin-bottom: 2rem;
         line-height: 1.6;
         color: #000000;
@@ -180,9 +189,17 @@ main#content {
     }
 
 
-
+    /*header h3 - not in use much?*/
     .project h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    /*subheader in containters*/
+    .project h4 {
+        font-size: 1.2rem;
         margin-top: 2.5rem;
         margin-bottom: 1rem;
         font-weight: 600;
@@ -235,12 +252,12 @@ main#content {
     top: calc(var(--header-height) + 2*(var(--cell-size)));
     width: 100vw;
     margin-left: calc(50% - 50vw); /* escape centered layout */
-    background: white;
+    background: #fff0f5;
     padding: 1.5rem 0;
     z-index: 20;
 }
 
-    .project-panel h2 {
+    .project-panel h2 {   /*white panel behind the header2*/
 
         max-width: var(--content-inner-width);
         margin: 0 auto;
@@ -249,6 +266,11 @@ main#content {
     }
 
 
+    .project-media {
+    display: flex;
+    justify-content: center; /* horizontal centering */
+    align-items: center;     /* vertical centering if height exists */
+}
 
 
 
@@ -259,7 +281,7 @@ main#content {
 }
 
     .project-block h3 {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         font-weight: 600;
         margin-bottom: 1rem;
         cursor: pointer; /* signals interactivity */
@@ -294,7 +316,15 @@ main#content {
 .project-block.layout-split .project-block-layout {
     grid-template-columns: 1fr 1fr;
 }
+.project-block.layout-threepart .project-block-layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+}
 
+    /* third element spans full width */
+    .project-block.layout-threepart .project-block-layout > :nth-child(3) {
+        grid-column: 1 / -1;
+    }
 
 
 /* Carousel styling */
@@ -367,87 +397,71 @@ main#content {
 
 
 
+/* -----------------------------
+   Shader & content width layout
+-------------------------------*/
 
-/*RESPONSIVE LAYOUT*/
-/* Tablet and up - landscape orientation */
-@media (min-width: 768px) and (orientation: landscape) {
-    .content-module {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-    }
-
-        .content-module.text-heavy {
-            grid-template-columns: 1.5fr 1fr;
-        }
-
-        .content-module.image-heavy {
-            grid-template-columns: 1fr 1.5fr;
-        }
-}
-
-/* Desktop and up */
-@media (min-width: 1024px) {
-    :root {
-        --content-padding: 4rem;
-    }
-}
-
-/* Tablet */
-@media (max-width: 1000px) {
-    main#content {
-        padding: 2rem 1rem;
-    }
-
-    .project {
-        margin-bottom: 4rem;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-    }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-    :root {
-        --content-padding: 1rem;
-    }
-
-    main#content {
-        padding: 2rem 1rem;
-    }
-
-    .project h2 {
-        font-size: 1rem;
-        line-height: 1.4;
-    }
-
-    .project h3 {
-        font-size: 1.2rem;
-    }
-
-    .carousel-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2rem;
-    }
-
-    .project ul {
-        margin-left: 1rem;
-    }
-}
-
-/* Portrait-specific adjustments */
+/* Portrait orientation */
 @media (orientation: portrait) {
-    .carousel-container {
-        margin: 1.5rem 0;
+
+    /* Default portrait: width < 1024px */
+    @media (max-width: 1024px) {
+        :root {
+            --shader-side-width: 8%;
+            --content-main-width: 80%;
+        }
     }
 
-    /* Stack everything vertically in portrait */
-    .content-module {
-        grid-template-columns: 1fr;
+    /* Portrait: width < 768px */
+    @media (max-width: 768px) {
+        :root {
+            --shader-side-width: max(5%, var(--cell-size)); /* min 1 cell */
+            --content-main-width: 85%;
+        }
+    }
+
+    /* Portrait: width < 500px */
+    @media (max-width: 500px) {
+        :root {
+            --shader-side-width: var(--cell-size); /* fixed 1 cell */
+            --content-main-width: 90%;
+        }
+    }
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) {
+
+    /* Landscape default for desktop width > 1024px */
+    @media (min-width: 1024px) {
+        :root {
+            --shader-side-width: 10%;
+            --content-main-width: 75%;
+        }
+    }
+
+    /* Landscape width < 1024px uses same as portrait smaller widths */
+    @media (max-width: 1023px) {
+        :root {
+            --shader-side-width: 8%;
+            --content-main-width: 80%;
+        }
+    }
+
+    /* Landscape width < 768px */
+    @media (max-width: 768px) {
+        :root {
+            --shader-side-width: max(5%, var(--cell-size));
+            --content-main-width: 85%;
+        }
+    }
+
+    /* Landscape width < 500px */
+    @media (max-width: 500px) {
+        :root {
+            --shader-side-width: var(--cell-size);
+            --content-main-width: 90%;
+        }
     }
 }
 
@@ -455,4 +469,18 @@ main#content {
     .project-block.layout-split .project-block-layout {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 768px), (orientation: portrait) {
+    .project-block.layout-threepart .project-block-layout {
+        grid-template-columns: 1fr;
+    }
+
+        .project-block.layout-threepart .project-block-layout > :nth-child(3) {
+            grid-column: auto;
+        }
+    
+        .project-block.layout-split .project-block-layout{
+            grid-template-columns: 1fr;
+        }
 }
