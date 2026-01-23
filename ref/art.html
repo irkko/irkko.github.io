@@ -23,11 +23,10 @@
 
     <div id="links-panel">
         <a href="irkko.github.io/ref/comingsoon" class="nav-item">About</a>
-
-        <a class="nav-item current" aria-current="page">>Template<</a>
-
         <a href="irkko.github.io/ref/games" class="nav-item">Games</a>
-        <a href="irkko.github.io/ref/art" class="nav-item">Art</a>
+
+        <a class="nav-item current" aria-current="page">>Art<</a>
+
         <a href="irkko.github.io/ref/vjing" class="nav-item">VJing</a>
         <a href="irkko.github.io/ref/comingsoon" class="nav-item">Blog</a>
     </div>
@@ -42,17 +41,115 @@
         <div class="content">
             <div class="project">
                 <div class="project-text">
-                    <p>WELCOME</p>
-                    <p>WELCOME</p>
-                    <p>WELCOME</p>
+                    <p>My artistic endeavours</p>
+
                     <br>
 
+
+                    <div class="project-panel">
+                        <h2>ABC of PCG</h2>
+                    </div>
+
+                    <div class="project-block layout-threepart">
+                        <h3>Basic concepts of Procedural Content Generation in an interactive digital zine (3part layout)</h3>
+                        <div class="project-block-content">
+                            <div class="project-block-layout">
+
+                                <!--TEXT ON THE LEFT -->
+                                <div class="project-text">
+                                    <p>Pick a seed, an accent color, and light or dark mode and enjoy</p>
+                                    <ul>
+                                        <li>Main PCG concepts from A to Z</li>
+                                        <li>Images are generated for you, based on your choice</li>
+                                        <li>Created in Unity</li>
+                                    </ul>
+
+
+                                    <!--IMAGES ON THE RIGHT -->
+                                </div>
+                                <div class="project-media">
+                                    <div class="carousel-container">
+
+
+                                        <div class="carousel" id="carousel1">
+                                            <img src="images/image1.png" alt="Willow Guard Screenshot 1">
+                                            <img src="images/image2.png" alt="Willow Guard Screenshot 2">
+                                            <img src="images/image3.png" alt="Willow Guard Screenshot 3">
+                                            <img src="images/image4.png" alt="Willow Guard Screenshot 4">
+                                            <img src="images/image5.png" alt="Willow Guard Screenshot 5">
+                                        </div>
+                                        <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                                        <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                                        <div class="carousel-dots" id="dots1"></div>
+
+                                    </div>
+                                </div>
+
+
+                                <!--3RD BLOCK TEXT BELOW -->
+                                <div class="project-extra">
+                                    <h4>How I created the zine</h4>
+                                    <ul>
+                                        <li>Shaders</li>
+                                        <li>UI</li>
+                                        <li>Love</li>
+                                    </ul>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
                 </div>
                 <div class="project-panel">
-                    <h2>Project Title</h2>
+                    <h2>ABC of GD</h2>
                 </div>
                 <div class="project-block layout-vertical">
-                    <h3>Container with vertical layout</h3>
+                    <h3>Game design zine (vertical layout template)</h3>
+                    <div class="project-block-content">
+                        <div class="project-block-layout">
+                            <div class="project-text">
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                                <p>I know things about game design</p>
+                            </div>
+                            <div class="project-media">
+                                <div class="carousel-container">
+
+
+                                    <div class="carousel" id="carousel1">
+                                        <img src="images/image1.png" alt="Willow Guard Screenshot 1">
+                                        <img src="images/image2.png" alt="Willow Guard Screenshot 2">
+                                        <img src="images/image3.png" alt="Willow Guard Screenshot 3">
+                                        <img src="images/image4.png" alt="Willow Guard Screenshot 4">
+                                        <img src="images/image5.png" alt="Willow Guard Screenshot 5">
+                                    </div>
+                                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
+                                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
+                                    <div class="carousel-dots" id="dots1"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-panel">
+                    <h2>Pixel art</h2>
+                </div>
+
+                <div class="project-block layout-split">
+                    <h3>Art made of sqaures</h3>
                     <div class="project-block-content">
                         <div class="project-block-layout">
                             <div class="project-text">
@@ -81,27 +178,32 @@
                                     <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
                                     <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
                                     <div class="carousel-dots" id="dots1"></div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
 
                 <div class="project-panel">
-                    <h2>2nd Project Title</h2>
+                    <h2>Social Media content creation</h2>
                 </div>
 
                 <div class="project-block layout-split">
-                    <h3>Container with split layout, images on the right</h3>
+                    <h3>Finnish Game Jam, Spaceship Game Jam, Pride Game Jam</h3>
                     <div class="project-block-content">
                         <div class="project-block-layout">
                             <div class="project-text">
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
+                                <p>Main text goes here...</p>
                             </div>
                             <div class="project-media">
                                 <div class="carousel-container">
@@ -117,118 +219,11 @@
                                     <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
                                     <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
                                     <div class="carousel-dots" id="dots1"></div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-                <p>Chechking how the text looks in between containers</p>
-                <p>Chechking how the text looks in between containers</p>
-                <p>Chechking how the text looks in between containers</p>
-                <p>Chechking how the text looks in between containers</p>
-
-                <div class="project-block layout-split">
-                    <h3>Container with split layout, images on the left </h3>
-                    <div class="project-block-content">
-                        <div class="project-block-layout">
-                            <div class="project-media">
-                                <div class="carousel-container">
-
-
-                                    <div class="carousel" id="carousel1">
-                                        <img src="images/image1.png" alt="Willow Guard Screenshot 1">
-                                        <img src="images/image2.png" alt="Willow Guard Screenshot 2">
-                                        <img src="images/image3.png" alt="Willow Guard Screenshot 3">
-                                        <img src="images/image4.png" alt="Willow Guard Screenshot 4">
-                                        <img src="images/image5.png" alt="Willow Guard Screenshot 5">
-                                    </div>
-                                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
-                                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
-                                    <div class="carousel-dots" id="dots1"></div>
-
-                                </div>
-                            </div>
-                            <div class="project-text">
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
-                                <p>Main text goes here...Main text goes here...Main text goes here...Main text goes here...</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="project-panel">
-                    <h2>3rd Project</h2>
-                </div>
-
-                <div class="project-block layout-threepart">
-                    <h3>Three-part layout</h3>
-                    <div class="project-block-content">
-                        <div class="project-block-layout">
-
-                            <!--TEXT ON THE LEFT -->
-                            <div class="project-text">
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-                                <p>Text on the left</p>
-
-                                <!--IMAGES ON THE RIGHT -->
-                            </div>
-                            <div class="project-media">
-                                <div class="carousel-container">
-
-
-                                    <div class="carousel" id="carousel1">
-                                        <img src="images/image1.png" alt="Willow Guard Screenshot 1">
-                                        <img src="images/image2.png" alt="Willow Guard Screenshot 2">
-                                        <img src="images/image3.png" alt="Willow Guard Screenshot 3">
-                                        <img src="images/image4.png" alt="Willow Guard Screenshot 4">
-                                        <img src="images/image5.png" alt="Willow Guard Screenshot 5">
-                                    </div>
-                                    <button class="carousel-btn prev" onclick="moveCarousel('carousel1', -1)">‹</button>
-                                    <button class="carousel-btn next" onclick="moveCarousel('carousel1', 1)">›</button>
-                                    <div class="carousel-dots" id="dots1"></div>
-
-                                </div>
-                            </div>
-
-
-                            <!--3RD BLOCK TEXT BELOW -->
-                            <div class="project-extra">
-                                <h4>Extra text below header4</h4>
-                                <p>Some text</p>
-                                <ul>
-
-                                    <!--LISTS -->
-                                    <li>List item 1</li>
-                                    <li>List item 2</li>
-                                    <ul>
-                                        <li>Indented list item 1</li>
-                                        <li>Indented list item 2</li>
-                                    </ul>
-                                    <li>List item 3</li>
-                                </ul>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
         </div>
     </main>
@@ -237,7 +232,7 @@
     <script src="shader.js"></script>
     <script src="sideshader.js"></script>
     <script src="carousel.js"></script>
-
+  
 
 </body>
 </html>
